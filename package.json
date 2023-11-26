@@ -2,6 +2,9 @@
   "name": "@lehigh-oracle-did23/aries-framework-oracle",
   "version": "1.0.0",
   "description": "",
+  "files": [
+    "build"
+  ],
   "main": "build/index",
   "scripts": {
     "start": "yarn run build && node ./build/index.js",
