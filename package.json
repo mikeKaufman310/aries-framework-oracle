@@ -1,0 +1,17 @@
+{
+  "name": "@ariesframework/oracle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aries-framework/core": "^0.4.2",
+    "axios": "^1.6.0",
+    "tsyringe": "^4.8.0"
+  }
+}
