@@ -7,7 +7,7 @@
     "start": "yarn run build && node ./build/index.js",
     "build": "yarn run clean && yarn run compile",
     "clean": "rm -rf ./build",
-    "compile": "tsc",
+    "compile": "tsc -p tsconfig.build.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "publishConfig": {
