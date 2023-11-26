@@ -1,5 +1,5 @@
 {
-  "name": "@aries-framework/oracle",
+  "name": "@lehigh-oracle-did23/aries-framework-oracle",
   "version": "1.0.0",
   "description": "",
   "main": "build/index",
