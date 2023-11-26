@@ -1,1 +1,0 @@
-{"version":3,"file":"OracleModuleConfig.js","sourceRoot":"","sources":["../src/OracleModuleConfig.ts"],"names":[],"mappings":";;;AAcA,MAAa,kBAAkB;IAG7B,YAAmB,OAAkC;QACnD,IAAI,CAAC,OAAO,GAAG,OAAO,CAAC;IACzB,CAAC;IAED,oDAAoD;IACpD,IAAW,aAAa;QACtB,OAAO,IAAI,CAAC,OAAO,CAAC,aAAa,CAAC;IACpC,CAAC;CACF;AAXD,gDAWC"}
