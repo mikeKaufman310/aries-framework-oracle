@@ -4,10 +4,25 @@
   "description": "",
   "main": "build/index",
   "scripts": {
+    "start": "yarn run build && node ./build/index.js",
+    "build": "yarn run clean && yarn run compile",
+    "clean": "rimraf ./build",
+    "compile": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lehigh-oracle-did23/aries-framework-oracle.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lehigh-oracle-did23/aries-framework-oracle/issues"
+  },
+  "homepage": "https://github.com/lehigh-oracle-did23/aries-framework-oracle#readme"
   "keywords": [],
-  "author": "",
+  "author": "Adrian M. Ross",
   "license": "ISC",
   "dependencies": {
     "@aries-framework/core": "^0.4.2",
