@@ -31,7 +31,6 @@ jobs:
         with:
           node-version: 18
           registry-url: https://npm.pkg.github.com/
-      - run: yarn clean
       - run: yarn install
       - run: yarn publish
         env:
