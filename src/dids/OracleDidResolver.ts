@@ -49,10 +49,14 @@ export class OracleDidResolver implements DidResolver {
 
     const didDocument = await oracleLedgerService.resolve(did);
 
+    const didDocumentJson = JsonTransformer.fromJSON(didDocument, DidDocument)
+    
+    didDocumentJson.assertionMethod = [didDocument.verificationMethod[0].id];
+
     return {
-      didDocument: JsonTransformer.fromJSON(didDocument, DidDocument),
+      didDocument: didDocumentJson,
       didDocumentMetadata: {},
       didResolutionMetadata: {},
-    }
+    };
   }
 }
