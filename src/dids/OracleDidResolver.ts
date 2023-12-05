@@ -50,7 +50,10 @@ export class OracleDidResolver implements DidResolver {
     const didDocument = await oracleLedgerService.resolve(did);
 
     // TEMP : add assertion here
-    const didDocumentJson = JsonTransformer.fromJSON(didDocument, DidDocument)
+    const didDocumentJson = JsonTransformer.fromJSON(didDocument, DidDocument);
+    didDocumentJson.context = Array.isArray(didDocumentJson.context) ? didDocumentJson.context : [didDocumentJson.context];
+    didDocumentJson.context.push("https://w3id.org/security/suites/ed25519-2018/v1");
+    didDocumentJson.context = Array.isArray(didDocumentJson.context) ? didDocumentJson.context : [didDocumentJson.context];
     didDocumentJson.assertionMethod = [didDocument.verificationMethod[0].id];
 
     return {
