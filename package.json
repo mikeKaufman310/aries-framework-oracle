@@ -1,6 +1,6 @@
 {
   "name": "@lehigh-oracle-did23/aries-framework-oracle",
-  "version": "1.0.2",
+  "version": "1.0.3-alpha.0",
   "description": "Oracle-VDR provides an optional addon to Aries Framework JavaScript to use the Oracle Blockchain Platform as the Verifiable Data Registry.",
   "files": [
     "build"
