@@ -26,8 +26,6 @@ export function parseOracleDid(didUrl: string): ParsedOracleDid | null {
 
   const sections = didUrl.match(orclIdentifierRegex);
 
-  console.log("sections", sections);
-
   if (sections) {
     const parts: ParsedOracleDid = {
       did: `did:orcl:${sections[1]}`,
