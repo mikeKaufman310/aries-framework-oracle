@@ -12,7 +12,7 @@
     "clean": "rm -rf ./build",
     "compile": "tsc -p tsconfig.build.json",
     "prepublishOnly": "yarn run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nyc ./node_modules/.bin/_mocha 'test/**/*.ts'"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -30,7 +30,13 @@
   "license": "ISC",
   "dependencies": {
     "@aries-framework/core": "^0.4.2",
+    "@testdeck/mocha": "^0.3.3",
     "axios": "^1.6.0",
+    "chai": "^5.1.0",
+    "mocha": "^10.4.0",
+    "nyc": "^15.1.0",
+    "ts-mockito": "^2.6.1",
+    "ts-node": "^10.9.2",
     "tsyringe": "^4.8.0"
   }
 }
