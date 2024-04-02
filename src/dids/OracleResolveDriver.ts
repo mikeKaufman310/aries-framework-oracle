@@ -8,6 +8,7 @@ const axios = require("axios");
  * @author Michael Kaufman
  * @summary Implements a DID Resolver Driver using previously implemented functions in 
  * Oracle codebase, as well as using functions from Open-Wallet Credo's typescript DID libraries
+ * Date Last Modified: Apr 1, 2024
  */
 export class OracleResolveDriver implements DidResolver{
     
@@ -29,14 +30,14 @@ export class OracleResolveDriver implements DidResolver{
         //open config file
         //const configFile = readFileSync('../transcripts/ledgerConfig.txt', 'utf-8');
         var configData = new String("");
-        fs.readFile(configFileStr, 'utf-8', function (err, optionData) => {
-            if(err){
-                //handle error
-                return;
-            }
-
-            configData = optionData;
-        });
+        //fs.readFile(configFileStr, 'utf-8', function (err, optionData) => {
+        //    if(err){
+        //        //handle error
+        //        return;
+        //    }
+//
+        //    configData = optionData;
+        //});
 
         //read config file for headers based on option chosen: CHAINCODE, NETWORK, CHANNEL, ENCODEDCRED
         //store string for chosen option
@@ -51,7 +52,10 @@ export class OracleResolveDriver implements DidResolver{
      * @param did DID to be resolved as string type
      * @returns Promise of DIDDoc resolution or error type defined in Open-Wallet Credo library
      */
-    public didResolve(did: string, queryDirectory: string): Promise<DidResolutionResult>{
+    public async didResolve(did: string, queryDirectory: string): Promise<any>{
+        if(did.length <= 0 || queryDirectory.length <= 0){
+            return Promise.resolve();
+        }
         //get did data with passed did and config ledger chaincode like OracleLedgerService line 131
         var chaincodeStr = this.configQuery(1,'${queryDirectory}');
         var data1 = JSON.stringify({
@@ -84,3 +88,4 @@ export class OracleResolveDriver implements DidResolver{
         //return Promise.resolve();//NOT ACTUAL RETURN STATEMENT; NEEDS TO BE IMPLEMENTED
     }
 }
+
