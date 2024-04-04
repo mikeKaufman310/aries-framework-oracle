@@ -12,9 +12,7 @@
     "clean": "rm -rf ./build",
     "compile": "tsc -p tsconfig.build.json",
     "prepublishOnly": "yarn run build",
-    "buildTest": "yarn run clean && yarn run testCompile",
-    "testCompile": "tsc -p tsconfig.test.json" ,
-    "test": "yarn run buildTest && node ./build/test/index.js"
+    "test": "yarn clean && npx jest"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -41,5 +39,10 @@
     "ts-mockito": "^2.6.1",
     "ts-node": "^10.9.2",
     "tsyringe": "^4.8.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2"
   }
 }

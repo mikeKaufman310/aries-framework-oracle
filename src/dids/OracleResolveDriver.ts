@@ -29,26 +29,45 @@ export class OracleResolveDriver{
         }
         //test with mock output
         if(configFileStr == "TEST"){//give mock output
-            var mockData = new Buffer("");//NB: find nondeprecated way to do this
-            mockData = fs.readFileSync('./../../transctipts/testConfig.txt');
-
+            const mockData: string = fs.readFileSync(process.cwd() + "/transcripts/testConfig.txt",'utf-8');
+            if(option == 1){
+                var initialPos = mockData.indexOf("CHAINCODE") + 9;
+                var finalPos = mockData.indexOf("NETWORK");
+                var desiredVal = "";
+                while(initialPos != finalPos){
+                    desiredVal += mockData[initialPos];
+                    initialPos++;
+                }
+                return desiredVal;
+            }else if(option == 2){
+                var initialPos = mockData.indexOf("NETWORK") + 9;
+                var finalPos = mockData.indexOf("CHANNEL");
+                var desiredVal = "";
+                while(initialPos != finalPos){
+                    desiredVal += mockData[initialPos];
+                    initialPos++;
+                }
+                return desiredVal;
+            }else if (option == 3){
+                var initialPos = mockData.indexOf("CHANNEL") + 9;
+                var finalPos = mockData.indexOf("ENCODEDCRED");
+                var desiredVal = "";
+                while(initialPos != finalPos){
+                    desiredVal += mockData[initialPos];
+                    initialPos++;
+                }
+                return desiredVal;
+            }else{// option 4
+                var initialPos = mockData.indexOf("CHAINCODE") + 9;
+                var finalPos = mockData.length;
+                var desiredVal = "";
+                while(initialPos != finalPos){
+                    desiredVal += mockData[initialPos];
+                    initialPos++;
+                }
+                return desiredVal;
+            }
         }
-        //open config file
-        //const configFile = readFileSync('../transcripts/ledgerConfig.txt', 'utf-8');
-        var configData = new String("");
-        //fs.readFile(configFileStr, 'utf-8', function (err, optionData) => {
-        //    if(err){
-        //        //handle error
-        //        return;
-        //    }
-//
-        //    configData = optionData;
-        //});
-
-        //read config file for headers based on option chosen: CHAINCODE, NETWORK, CHANNEL, ENCODEDCRED
-        //store string for chosen option
-        //close opened file
-        //return sttring with config information
 
         return "";//NOT ACTUAL RETURN STATEMENT; NEEDS TO BE IMPLEMENTED
     }
