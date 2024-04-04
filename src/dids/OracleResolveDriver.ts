@@ -22,7 +22,7 @@ export class OracleResolveDriver{
      * Option 4: ENCODEDCRED string
      * @returns string of ledger endpoints to hit with REST API calls
      */
-    private configQuery(option:number, configFileStr:string): string{
+    public configQuery(option:number, configFileStr:string): string{
         //check that option is in range 1 to 4
         if(option < 1 || option > 4){
             return "";//error handling
@@ -52,9 +52,13 @@ export class OracleResolveDriver{
      * @param did DID to be resolved as string type
      * @returns Promise of DIDDoc resolution or error type defined in Open-Wallet Credo library
      */
-    public async didResolve(did: string, queryDirectory: string): Promise<any>{
+    async didResolve(did: string, queryDirectory: string): Promise<any>{
         if(did.length <= 0 || queryDirectory.length <= 0){
-            return Promise.resolve(new Promise<any>(() => {}));
+                if(did.length <= 0){
+                    return -1;
+                }else{
+                    return -1;
+                }
         }
         //get did data with passed did and config ledger chaincode like OracleLedgerService line 131
         var chaincodeStr = this.configQuery(1,'${queryDirectory}');
