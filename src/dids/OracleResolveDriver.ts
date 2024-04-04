@@ -27,6 +27,12 @@ export class OracleResolveDriver{
         if(option < 1 || option > 4){
             return "";//error handling
         }
+        //test with mock output
+        if(configFileStr == "TEST"){//give mock output
+            var mockData = new Buffer("");//NB: find nondeprecated way to do this
+            mockData = fs.readFileSync('./../../transctipts/testConfig.txt');
+
+        }
         //open config file
         //const configFile = readFileSync('../transcripts/ledgerConfig.txt', 'utf-8');
         var configData = new String("");
@@ -86,7 +92,7 @@ export class OracleResolveDriver{
             return res.data.result.payload;
           } catch (err) {
             console.log(err);
-            return Promise.resolve();
+            return -1;
           }
         
         //return Promise.resolve();//NOT ACTUAL RETURN STATEMENT; NEEDS TO BE IMPLEMENTED

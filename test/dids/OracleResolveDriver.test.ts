@@ -40,5 +40,13 @@ export class OracleResolveDriverTests {
         console.log("Test 2: " + bool);
     }
 
+    static async testValidParamsWithSuccess(){
+
+    }
+
+    static async testValidParamsWithBadPost(){
+        
+    }
+
 }
 
