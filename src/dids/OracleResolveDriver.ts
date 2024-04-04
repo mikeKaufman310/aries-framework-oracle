@@ -10,7 +10,7 @@ const axios = require("axios");
  * Oracle codebase, as well as using functions from Open-Wallet Credo's typescript DID libraries
  * Date Last Modified: Apr 1, 2024
  */
-export class OracleResolveDriver implements DidResolver{
+export class OracleResolveDriver{
     
     /**
      * Method to query user's config file, which contains ledger specific information
@@ -54,7 +54,7 @@ export class OracleResolveDriver implements DidResolver{
      */
     public async didResolve(did: string, queryDirectory: string): Promise<any>{
         if(did.length <= 0 || queryDirectory.length <= 0){
-            return Promise.resolve();
+            return Promise.resolve(new Promise<any>(() => {}));
         }
         //get did data with passed did and config ledger chaincode like OracleLedgerService line 131
         var chaincodeStr = this.configQuery(1,'${queryDirectory}');

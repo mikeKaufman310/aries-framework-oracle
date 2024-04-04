@@ -1,8 +1,6 @@
-
-
-import { mock, instance } from 'ts-mockito';
 import {OracleResolveDriver} from '../../src/dids/OracleResolveDriver';
 import * as assert from 'assert';
+
 
 
 
@@ -16,7 +14,7 @@ var mockDirectory;
  * @author Michael Kaufman
  * Date Last Modified: Apr 1, 2024
  */
-class OracleResolveDriverTests {
+export class OracleResolveDriverTests {
 
     /**
      * Method to run all tests for OracleResolveDriver class
@@ -29,14 +27,13 @@ class OracleResolveDriverTests {
     //tests for didResolve method
     public static testEmptyPromiseOnZeroLengthDid(){
         var driver = new OracleResolveDriver();
-        assert.equal(driver.didResolve("",mockQueryText),Promise.resolve());
+        assert.equal(driver.didResolve("",mockQueryText),new Promise<any>(() => {}));
     }
 
     public static testEmptyPromiseOnZeroLengthDirectory(){
         var driver = new OracleResolveDriver();
-        assert.equal(driver.didResolve(mockDidText,""), Promise.resolve());
+        assert.equal(driver.didResolve(mockDidText,""), new Promise<any>(() => {}));
     }
 
 }
 
-OracleResolveDriverTests.runTests();

@@ -12,7 +12,9 @@
     "clean": "rm -rf ./build",
     "compile": "tsc -p tsconfig.build.json",
     "prepublishOnly": "yarn run build",
-    "test": "nyc ./node_modules/.bin/_mocha 'test/**/*.test.ts'"
+    "buildTest": "yarn run clean && yarn run testCompile",
+    "testCompile": "tsc -p tsconfig.test.json" ,
+    "test": "yarn run buildTest && node ./build/test/index.js"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
