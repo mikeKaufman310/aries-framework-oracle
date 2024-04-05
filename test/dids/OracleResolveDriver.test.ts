@@ -6,7 +6,7 @@ declare function assert(value: unknown): asserts value;
 /**
  * File to test methods in oracle Resolve Driver class
  * @author Michael Kaufman
- * Date Last Modified: Apr 4, 2024
+ * Date Last Modified: Apr 5, 2024
  */
 
 
@@ -21,17 +21,18 @@ var mockDirectory = "TEST";
 
 //didResolve function
 test('Test 1: Zero Length DID Passed', async () => {
-    var driver = new OracleResolveDriver();
-    const result1 =  await driver.didResolve("",mockQueryText);
-    const bool1 = result1 == -1;
-    expect(bool1 == true);
+    
+    await expect(async () => {
+        var driver = new OracleResolveDriver();
+        await driver.didResolve("",mockQueryText);
+    }).rejects.toThrow();
 });
 
 test('Test 2: Zero Length Directory Passed', async () => {
-    var driver = new OracleResolveDriver();
-    const result1 =  await driver.didResolve(mockDidText,"");
-    const bool1 = result1 == -1;
-    expect(bool1 == true);
+    await expect(async () => {
+        var driver = new OracleResolveDriver();
+        await driver.didResolve(mockDid,"");
+    }).rejects.toThrow();
 });
 
 test('Test 3: Valid Credentials Passed', async () => {
@@ -57,8 +58,7 @@ test('Test 3: Valid Credentials Passed', async () => {
         }
     });
     const result = await driver.didResolve(mockDid, mockDirectory);
-    const bool = result != -1;
-    expect(bool == true);
+    expect(result).not.toBe(Promise.resolve(-1));
 });
 
 

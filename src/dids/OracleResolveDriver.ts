@@ -1,14 +1,13 @@
 import type {DidResolver, DidResolutionResult} from '@credo-ts/core'
 import * as fs from 'fs';
-
-const axios = require("axios");
+import axios from 'axios';
 
 /**
  * Class to implemented a DID Resolver Driver to be a part of DIF Universal Resolver 
  * @author Michael Kaufman
  * @summary Implements a DID Resolver Driver using previously implemented functions in 
  * Oracle codebase, as well as using functions from Open-Wallet Credo's typescript DID libraries
- * Date Last Modified: Apr 4, 2024
+ * Date Last Modified: Apr 5, 2024
  */
 export class OracleResolveDriver{
     
@@ -96,9 +95,9 @@ export class OracleResolveDriver{
     async didResolve(did: string, queryDirectory: string): Promise<any>{
         if(did.length <= 0 || queryDirectory.length <= 0){
                 if(did.length <= 0){
-                    return -1;
+                    throw new Error("Invalid DID passed to didResolve method");
                 }else{
-                    return -1;
+                    throw new Error("Invalid Query Directory passed to didResolve method");
                 }
         }
         //get did data with passed did and config ledger chaincode like OracleLedgerService line 131
@@ -126,8 +125,7 @@ export class OracleResolveDriver{
             let res = await axios(configPost);
             return res.data.result.payload;
           } catch (err) {
-            console.log(err);
-            return -1;
+            return Promise.resolve(-1);
           }
     }
 }
