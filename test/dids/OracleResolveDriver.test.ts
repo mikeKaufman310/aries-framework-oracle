@@ -3,6 +3,13 @@ import axios from 'axios';
 declare function assert(value: unknown): asserts value;
 
 
+/**
+ * File to test methods in oracle Resolve Driver class
+ * @author Michael Kaufman
+ * Date Last Modified: Apr 4, 2024
+ */
+
+
 
 //fields for mock resoution calls
 var mockDidText = "mockDid";
@@ -10,11 +17,7 @@ var mockQueryText = "mockDirectoryForQuery";
 var mockDid = "did:oracle:test";
 var mockDirectory = "TEST";
 
-/**
- * File to test methods in oracle Resolve Driver class
- * @author Michael Kaufman
- * Date Last Modified: Apr 1, 2024
- */
+
 
 //didResolve function
 test('Test 1: Zero Length DID Passed', async () => {

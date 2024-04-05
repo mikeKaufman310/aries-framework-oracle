@@ -8,7 +8,7 @@ const axios = require("axios");
  * @author Michael Kaufman
  * @summary Implements a DID Resolver Driver using previously implemented functions in 
  * Oracle codebase, as well as using functions from Open-Wallet Credo's typescript DID libraries
- * Date Last Modified: Apr 1, 2024
+ * Date Last Modified: Apr 4, 2024
  */
 export class OracleResolveDriver{
     
@@ -103,7 +103,7 @@ export class OracleResolveDriver{
         }
         //get did data with passed did and config ledger chaincode like OracleLedgerService line 131
         var chaincodeStr = this.configQuery(1,queryDirectory);
-        var data1 = JSON.stringify({
+        var didDoc = JSON.stringify({
             chaincode: chaincodeStr,
             args: ["GetDidDocumentById", did],
             sync: true,
@@ -119,7 +119,7 @@ export class OracleResolveDriver{
               Authorization: `Basic ${credStr}`,
               "Content-Type": "application/json",
             },
-            data: data1,
+            data: didDoc,
         }
         //wrap axios post in promise data type and return it
         try {
