@@ -26,7 +26,7 @@ export class OracleResolveDriver{
             var initialPos = fileContents.indexOf("CHAINCODE") + 9;
             var finalPos = fileContents.indexOf("NETWORK");
             var desiredVal = "";
-            while(initialPos != finalPos){
+            while(initialPos < finalPos){
                 desiredVal += fileContents[initialPos];
                 initialPos++;
             }
@@ -35,7 +35,7 @@ export class OracleResolveDriver{
             var initialPos = fileContents.indexOf("NETWORK") + 7;
             var finalPos = fileContents.indexOf("CHANNEL");
             var desiredVal = "";
-            while(initialPos != finalPos){
+            while(initialPos < finalPos){
                 desiredVal += fileContents[initialPos];
                 initialPos++;
             }
@@ -44,7 +44,7 @@ export class OracleResolveDriver{
             var initialPos = fileContents.indexOf("CHANNEL") + 7;
             var finalPos = fileContents.indexOf("ENCODEDCRED");
             var desiredVal = "";
-            while(initialPos != finalPos){
+            while(initialPos < finalPos){
                 desiredVal += fileContents[initialPos];
                 initialPos++;
             }
@@ -53,7 +53,7 @@ export class OracleResolveDriver{
             var initialPos = fileContents.indexOf("CHAINCODE") + 9;
             var finalPos = fileContents.length;
             var desiredVal = "";
-            while(initialPos != finalPos){
+            while(initialPos < finalPos){
                 desiredVal += fileContents[initialPos];
                 initialPos++;
             }

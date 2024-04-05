@@ -56,53 +56,50 @@ test('Test 3: Valid Credentials Passed', async () => {
     const result = await driver.didResolve(mockDid, mockDirectory);
     const bool = result != -1;
     expect(bool == true);
-    //can also check if the correct axios address was hit with code:
-    //expect(axios.get).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/posts/1');
 });
 
-//static async testValidParamsWithBadPost() also do this test for the suite
-test('Test 4: Invalid Credentials Passed', async () =>{
-    expect(true);//NB : to be implemented
-});
 
 //parseConfig function
-test('Test 5: Invalid Option Passed', () => {
-    expect(true);//NB : to be implemented
+test('Test 4: Invalid File Contents Passed and Invalid Option Passed', () => {
+    expect(()=>{OracleResolveDriver.parseConfig(0, "");}).toThrow();
 });
 
-test('Test 6: Invalid File Contents Passed', () => {
-    expect(true);//NB : to be implemented
+test('Test 5: Valid Option Passed and Invalid File Contents Passed', () => {
+    expect(()=>{OracleResolveDriver.parseConfig(1, "");}).toThrow();
 });
 
-test('Test 7: Valid Option Passed and Invalid File Contents Passed', () => {
-    expect(true);//NB : to be implemented
+test('Test 6: Invalid Option Passed and Valid File Contents Passed', () => {
+    expect(()=>{OracleResolveDriver.parseConfig(0, mockDirectory);}).toThrow();
 });
 
-test('Test 8: Invalid Option Passed and Valid File Contents Passed', () => {
-    expect(true);//NB : to be implemented
+test('Test 7: Valid Params Passed', () => {
+    expect(()=>{OracleResolveDriver.parseConfig(1, mockDirectory);}).not.toThrow();
+});
+
+
+//configQuery function
+test('Test 8: Invalid Option Passed and Valid Config File Passed', () => {
+    var driver = new OracleResolveDriver();
+    expect(()=>{driver.configQuery(0, mockDirectory)}).toThrow();
 });
 
 test('Test 9: Valid Params Passed', () => {
-    expect(true);//NB : to be implemented
+    var driver = new OracleResolveDriver();
+    expect(()=>{driver.configQuery(1, mockDirectory)}).not.toThrow();
 });
 
-//configQuery function
 test('Test 10: Invalid Option Passed', () => {
-    expect(true);//NB : to be implemented
+    var driver = new OracleResolveDriver();
+    expect(()=>{driver.configQuery(0, "")}).toThrow();
 });
 
 test('Test 11: Invalid Config File Passed', () => {
-    expect(true);//NB : to be implemented
+    var driver = new OracleResolveDriver();
+    expect(()=>{driver.configQuery(1, "")}).toThrow();
 });
 
-test('Test 12: Valid Option Passed and Invalid Config File Passed', () => {
-    expect(true);//NB : to be implemented
-});
 
-test('Test 13: Invalid Option Passed and Valid Config File Passed', () => {
-    expect(true);//NB : to be implemented
-});
 
-test('Test 14: Valid Params Passed', () => {
-    expect(true);//NB : to be implemented
-});
+
+
+
