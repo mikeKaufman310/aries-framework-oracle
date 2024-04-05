@@ -11,10 +11,12 @@ var mockDid = "did:oracle:test";
 var mockDirectory = "TEST";
 
 /**
- * Class to test methods in oracle Resolve Driver class
+ * File to test methods in oracle Resolve Driver class
  * @author Michael Kaufman
  * Date Last Modified: Apr 1, 2024
  */
+
+//didResolve function
 test('Test 1: Zero Length DID Passed', async () => {
     var driver = new OracleResolveDriver();
     const result1 =  await driver.didResolve("",mockQueryText);
@@ -59,4 +61,48 @@ test('Test 3: Valid Credentials Passed', async () => {
 });
 
 //static async testValidParamsWithBadPost() also do this test for the suite
+test('Test 4: Invalid Credentials Passed', async () =>{
+    expect(true);//NB : to be implemented
+});
 
+//parseConfig function
+test('Test 5: Invalid Option Passed', () => {
+    expect(true);//NB : to be implemented
+});
+
+test('Test 6: Invalid File Contents Passed', () => {
+    expect(true);//NB : to be implemented
+});
+
+test('Test 7: Valid Option Passed and Invalid File Contents Passed', () => {
+    expect(true);//NB : to be implemented
+});
+
+test('Test 8: Invalid Option Passed and Valid File Contents Passed', () => {
+    expect(true);//NB : to be implemented
+});
+
+test('Test 9: Valid Params Passed', () => {
+    expect(true);//NB : to be implemented
+});
+
+//configQuery function
+test('Test 10: Invalid Option Passed', () => {
+    expect(true);//NB : to be implemented
+});
+
+test('Test 11: Invalid Config File Passed', () => {
+    expect(true);//NB : to be implemented
+});
+
+test('Test 12: Valid Option Passed and Invalid Config File Passed', () => {
+    expect(true);//NB : to be implemented
+});
+
+test('Test 13: Invalid Option Passed and Valid Config File Passed', () => {
+    expect(true);//NB : to be implemented
+});
+
+test('Test 14: Valid Params Passed', () => {
+    expect(true);//NB : to be implemented
+});
