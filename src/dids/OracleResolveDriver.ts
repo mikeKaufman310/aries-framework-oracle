@@ -129,8 +129,6 @@ export class OracleResolveDriver{
             console.log(err);
             return -1;
           }
-        
-        //return Promise.resolve();//NOT ACTUAL RETURN STATEMENT; NEEDS TO BE IMPLEMENTED
     }
 }
 
