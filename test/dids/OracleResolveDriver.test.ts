@@ -23,20 +23,20 @@ var mockDirectory = "TEST";
 test('Test 1: Zero Length DID Passed', async () => {
     
     await expect(async () => {
-        var driver = new OracleResolveDriver();
+        const driver = new OracleResolveDriver();
         await driver.didResolve("",mockQueryText);
     }).rejects.toThrow();
 });
 
 test('Test 2: Zero Length Directory Passed', async () => {
     await expect(async () => {
-        var driver = new OracleResolveDriver();
+        const driver = new OracleResolveDriver();
         await driver.didResolve(mockDid,"");
     }).rejects.toThrow();
 });
 
 test('Test 3: Valid Credentials Passed', async () => {
-    var driver = new OracleResolveDriver();
+    const driver = new OracleResolveDriver();
     jest.spyOn(axios, 'post').mockResolvedValue({
         data:{
             "@context":[
@@ -82,22 +82,22 @@ test('Test 7: Valid Params Passed', () => {
 
 //configQuery function
 test('Test 8: Invalid Option Passed and Valid Config File Passed', () => {
-    var driver = new OracleResolveDriver();
+    const driver = new OracleResolveDriver();
     expect(()=>{driver.configQuery(0, mockDirectory)}).toThrow();
 });
 
 test('Test 9: Valid Params Passed', () => {
-    var driver = new OracleResolveDriver();
+    const driver = new OracleResolveDriver();
     expect(()=>{driver.configQuery(1, mockDirectory)}).not.toThrow();
 });
 
 test('Test 10: Invalid Option Passed', () => {
-    var driver = new OracleResolveDriver();
+    const driver = new OracleResolveDriver();
     expect(()=>{driver.configQuery(0, "")}).toThrow();
 });
 
 test('Test 11: Invalid Config File Passed', () => {
-    var driver = new OracleResolveDriver();
+    const driver = new OracleResolveDriver();
     expect(()=>{driver.configQuery(1, "")}).toThrow();
 });
 

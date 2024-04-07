@@ -22,36 +22,36 @@ export class OracleResolveDriver{
             throw new Error("Invalid params passed to parseConfig function");
         }
         if(option == 1){
-            var initialPos = fileContents.indexOf("CHAINCODE") + 9;
-            var finalPos = fileContents.indexOf("NETWORK");
-            var desiredVal = "";
+            let initialPos = fileContents.indexOf("CHAINCODE") + 9;
+            const finalPos = fileContents.indexOf("NETWORK");
+            let desiredVal = "";
             while(initialPos < finalPos){
                 desiredVal += fileContents[initialPos];
                 initialPos++;
             }
             return desiredVal;
         }else if(option == 2){
-            var initialPos = fileContents.indexOf("NETWORK") + 7;
-            var finalPos = fileContents.indexOf("CHANNEL");
-            var desiredVal = "";
+            let initialPos = fileContents.indexOf("NETWORK") + 7;
+            const finalPos = fileContents.indexOf("CHANNEL");
+            let desiredVal = "";
             while(initialPos < finalPos){
                 desiredVal += fileContents[initialPos];
                 initialPos++;
             }
             return desiredVal;
         }else if (option == 3){
-            var initialPos = fileContents.indexOf("CHANNEL") + 7;
-            var finalPos = fileContents.indexOf("ENCODEDCRED");
-            var desiredVal = "";
+            let initialPos = fileContents.indexOf("CHANNEL") + 7;
+            const finalPos = fileContents.indexOf("ENCODEDCRED");
+            let desiredVal = "";
             while(initialPos < finalPos){
                 desiredVal += fileContents[initialPos];
                 initialPos++;
             }
             return desiredVal;
         }else{// option 4
-            var initialPos = fileContents.indexOf("CHAINCODE") + 9;
-            var finalPos = fileContents.length;
-            var desiredVal = "";
+            let initialPos = fileContents.indexOf("CHAINCODE") + 9;
+            const finalPos = fileContents.length;
+            let desiredVal = "";
             while(initialPos < finalPos){
                 desiredVal += fileContents[initialPos];
                 initialPos++;
@@ -101,16 +101,16 @@ export class OracleResolveDriver{
                 }
         }
         //get did data with passed did and config ledger chaincode like OracleLedgerService line 131
-        var chaincodeStr = this.configQuery(1,queryDirectory);
-        var didDoc = JSON.stringify({
+        const chaincodeStr = this.configQuery(1,queryDirectory);
+        let didDoc = JSON.stringify({
             chaincode: chaincodeStr,
             args: ["GetDidDocumentById", did],
             sync: true,
         });
         //hit axios post with network info like OracleLedgerSerivce line 137 and line 148
-        var networkStr = this.configQuery(2,queryDirectory);
-        var channelStr = this.configQuery(3, queryDirectory);
-        var credStr = this.configQuery(4, queryDirectory);
+        const networkStr = this.configQuery(2,queryDirectory);
+        const channelStr = this.configQuery(3, queryDirectory);
+        const credStr = this.configQuery(4, queryDirectory);
         let configPost = {
             url: `${networkStr}/api/v2/channels/${channelStr}/transactions`,
             method: "post",
