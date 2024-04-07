@@ -6,7 +6,7 @@ declare function assert(value: unknown): asserts value;
 /**
  * File to test methods in oracle Resolve Driver class
  * @author Michael Kaufman
- * Date Last Modified: Apr 5, 2024
+ * Date Last Modified: Apr 7, 2024
  */
 
 
@@ -102,7 +102,23 @@ test('Test 11: Invalid Config File Passed', () => {
 });
 
 
+//didResolveMetaData function
+test('Test 12: Invalid DID passed', ()=>{
+    expect(false);//TO BE IMPLEMENTED
+});
 
+test('Test 13: Invalid metadata passed', ()=>{
+    expect(false);//TO BE IMPLEMENTED
+});
 
+test('Test 14: Both Params invalid passed', ()=>{
+    expect(false);//TO BE IMPLEMENTED
+});
 
+test('Test 15: Valid Params passed and REST call made, success', ()=>{
+    expect(false);//TO BE IMPLEMENTED
+});
 
+test('Test 16: Valid Params passed and REST call made, failure', ()=>{
+    expect(false);//TO BE IMPLEMENTED
+});

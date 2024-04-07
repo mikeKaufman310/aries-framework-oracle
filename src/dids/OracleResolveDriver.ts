@@ -7,7 +7,7 @@ import axios from 'axios';
  * @author Michael Kaufman
  * @summary Implements a DID Resolver Driver using previously implemented functions in 
  * Oracle codebase, as well as using functions from Open-Wallet Credo's typescript DID libraries
- * Date Last Modified: Apr 5, 2024
+ * Date Last Modified: Apr 7, 2024
  */
 export class OracleResolveDriver{
     
@@ -127,6 +127,21 @@ export class OracleResolveDriver{
           } catch (err) {
             return Promise.resolve(-1);
           }
+    }
+
+    /**
+     * Method to resolve a DIDDoc's metadata and use/verify any of its elements before next stage of resolution
+     * @param did DID to be resolved and have verified metadata after resolution
+     * @param metadata DIDDoc metadata with elements to use in resolution of did
+     * @returns Promise of DIDDoc resolution after manipulated metadata or error type
+     */
+    public didResolveMetaData(did: string, metadata: any): Promise<any>{
+        //check valid params passed to function
+        //seperate metadata about did or chain validity into specific variables(const)
+        //hit rest api endpoint to verify resolution of metadata elements
+        //figure out api call response
+        //return based on api call response
+        return Promise.resolve();//NOT ACTUAL RETURN STATEMENT, FOR COMPILATION
     }
 }
 
