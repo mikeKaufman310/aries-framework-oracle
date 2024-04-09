@@ -1,13 +1,14 @@
-import type {DidResolver, DidResolutionResult} from '@credo-ts/core'
+import {type DidResolver, type DidResolutionResult, DidDocument} from '@credo-ts/core';
 import * as fs from 'fs';
 import axios from 'axios';
+import { JsonTransformer } from '@credo-ts/core';
 
 /**
  * Class to implemented a DID Resolver Driver to be a part of DIF Universal Resolver 
  * @author Michael Kaufman
  * @summary Implements a DID Resolver Driver using previously implemented functions in 
  * Oracle codebase, as well as using functions from Open-Wallet Credo's typescript DID libraries
- * Date Last Modified: Apr 7, 2024
+ * Date Last Modified: Apr 9, 2024
  */
 export class OracleResolveDriver{
     
@@ -131,17 +132,22 @@ export class OracleResolveDriver{
 
     /**
      * Method to resolve a DIDDoc's metadata and use/verify any of its elements before next stage of resolution
-     * @param did DID to be resolved and have verified metadata after resolution
+     * @param diddoc DIDDoc with metadata to be resolved and have verified metadata after resolution
      * @param metadata DIDDoc metadata with elements to use in resolution of did
-     * @returns Promise of DIDDoc resolution after manipulated metadata or error type
+     * @returns Promise of DIDDoc resolution (string) after manipulated metadata or error type
      */
-    public didResolveMetaData(did: string, metadata: any): Promise<any>{
-        //check valid params passed to function
-        //seperate metadata about did or chain validity into specific variables(const)
-        //hit rest api endpoint to verify resolution of metadata elements
-        //figure out api call response
-        //return based on api call response
-        return Promise.resolve();//NOT ACTUAL RETURN STATEMENT, FOR COMPILATION
+    public didResolveMetaData(diddoc: string): Promise<any>{
+        if(diddoc.length <= 0){
+            throw new Error("Invalid params passed to didResolveMetaData method");
+        }
+        try{
+            const diddocObject = JsonTransformer.fromJSON(JSON.parse(diddoc), DidDocument);
+            //hit rest api endpoint to verify resolution of metadata elements
+            //NB: this will be implemented in a later issue
+            return Promise.resolve(JSON.stringify(diddocObject));
+        }catch(err){
+            throw new Error("Unable to parse DIDDoc into JSON in didResolveMetaData method");
+        }
     }
 }
 
