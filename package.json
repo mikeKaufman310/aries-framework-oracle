@@ -12,7 +12,7 @@
     "clean": "rm -rf ./build",
     "compile": "tsc -p tsconfig.build.json",
     "prepublishOnly": "yarn run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "yarn clean && npx jest"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -30,7 +30,19 @@
   "license": "ISC",
   "dependencies": {
     "@aries-framework/core": "^0.4.2",
+    "@credo-ts/core": "^0.5.1",
+    "@testdeck/mocha": "^0.3.3",
     "axios": "^1.6.0",
+    "chai": "^5.1.0",
+    "mocha": "^10.4.0",
+    "nyc": "^15.1.0",
+    "ts-mockito": "^2.6.1",
+    "ts-node": "^10.9.2",
     "tsyringe": "^4.8.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2"
   }
 }
