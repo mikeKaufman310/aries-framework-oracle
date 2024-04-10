@@ -163,6 +163,10 @@ export class OracleResolveDriver{
         }
         try{
             const diddocObject = JsonTransformer.fromJSON(JSON.parse(diddoc),DidDocument);
+            if(diddocObject.verificationMethod == null){
+                return Promise.resolve(JSON.stringify(diddocObject));
+            }
+            const verificationMethodObject = diddocObject.dereferenceVerificationMethod();
         }catch(err){
             throw new Error("Unable to parse DIDDoc into JSON in didWrapVerificationMethod method");
         }
