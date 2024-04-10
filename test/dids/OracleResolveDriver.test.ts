@@ -7,7 +7,7 @@ declare function assert(value: unknown): asserts value;
 /**
  * File to test methods in oracle Resolve Driver class
  * @author Michael Kaufman
- * Date Last Modified: Apr 9, 2024
+ * Date Last Modified: Apr 10, 2024
  */
 
 
@@ -119,7 +119,7 @@ test('Test 13: Valid Params passed and REST call made, success', ()=>{
 
 test('Test 14: Valid Params passed and REST call not made, failure ', ()=>{
     const driver = new OracleResolveDriver();
-    expect(()=>{driver.didResolveMetaData('{"name":"mockFailJSON"}')}).toThrow();
+    expect(()=>{driver.didResolveMetaData('test')}).toThrow();
 });
 
 test('Test 15: Valid Params passed and REST call made, failure UNIMPLEMENTED', ()=>{
