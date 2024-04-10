@@ -156,6 +156,14 @@ export class OracleResolveDriver{
      */
     public didWrapVerificationMethod(diddoc: string): Promise<any>{
         //check validitty of passed params
+        if(diddoc.length <= 0){
+            throw new Error("Invalid params passed to didWrapVerificationMethod method");
+        }
+        try{
+            const diddocObject = JsonTransformer.fromJSON(JSON.parse(diddoc),DidDocument);
+        }catch(err){
+            throw new Error("Unable to parse DIDDoc into JSON in didWrapVerificationMethod method");
+        }
         //check if diddoc contains a verification method, if so continue, if not return passed diddoc
         //carry out diddocs verifcation method
         //check result of verifcation method
