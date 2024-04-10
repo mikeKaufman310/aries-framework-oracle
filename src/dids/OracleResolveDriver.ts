@@ -133,7 +133,6 @@ export class OracleResolveDriver{
     /**
      * Method to resolve a DIDDoc's metadata and use/verify any of its elements before next stage of resolution
      * @param diddoc DIDDoc with metadata to be resolved and have verified metadata after resolution
-     * @param metadata DIDDoc metadata with elements to use in resolution of did
      * @returns Promise of DIDDoc resolution (string) after manipulated metadata or error type
      */
     public didResolveMetaData(diddoc: string): Promise<any>{
@@ -148,6 +147,20 @@ export class OracleResolveDriver{
         }catch(err){
             throw new Error("Unable to parse DIDDoc into JSON in didResolveMetaData method");
         }
+    }
+
+    /**
+     * Method to execute a diddoc's verification method, if applicable, and returning verfication result
+     * @param diddoc string of resolved diddoc
+     * @returns promise of diddoc resolution (string) or throws an error
+     */
+    public didWrapVerificationMethod(diddoc: string): Promise<any>{
+        //check validitty of passed params
+        //check if diddoc contains a verification method, if so continue, if not return passed diddoc
+        //carry out diddocs verifcation method
+        //check result of verifcation method
+        //return based on verification method result
+        return Promise.resolve();//not actual return sttatement
     }
 }
 

@@ -125,3 +125,25 @@ test('Test 14: Valid Params passed and REST call not made, failure ', ()=>{
 test('Test 15: Valid Params passed and REST call made, failure UNIMPLEMENTED', ()=>{
     expect(false);//TO BE IMPLEMENTED
 });
+
+
+//didWrapVerificationMethod function
+test('Test 16: Invalid string passed UNIMPLEMENTED', ()=>{
+    expect(true);//TO BE IMPLEMENTED
+});
+
+test('Test 17: Valid string passed, but not diddoc UNIMPLEMENTED', ()=>{
+    expect(true);//TO BE IMPLEMENTED
+});
+
+test('Test 18: Valid diddoc passed with no verfication method UNIMPLEMENTED', ()=>{
+    expect(true);//TO BE IMPLEMENTED
+});
+
+test('Test 19: Unverifiable but valid diddoc passed UNIMPLEMENTED', ()=>{
+    expect(true);//TO BE IMPLEMENTED
+});
+
+test('Test 20: Valid diddoc passed and verified UNIMPLEMENTED', ()=>{
+    expect(true);//TO BE IMPLEMENTED
+});
