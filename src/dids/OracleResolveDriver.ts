@@ -132,18 +132,18 @@ export class OracleResolveDriver{
 
     /**
      * Method to resolve a DIDDoc's metadata and use/verify any of its elements before next stage of resolution
-     * @param diddoc DIDDoc with metadata to be resolved and have verified metadata after resolution
-     * @returns Promise of DIDDoc resolution (string) after manipulated metadata or error type
+     * @param diddoc DIDDoc metadata to be resolved and have verified metadata after resolution
+     * @returns Promise of DIDDoc metadata (string) after manipulated metadata for verification or error type
      */
-    public didResolveMetaData(diddoc: string): Promise<any>{
-        if(diddoc.length <= 0){
+    public didResolveMetaData(diddocMetadata: string): Promise<any>{
+        if(diddocMetadata.length <= 0){
             throw new Error("Invalid params passed to didResolveMetaData method");
         }
         try{
-            const diddocObject = JsonTransformer.fromJSON(JSON.parse(diddoc), DidDocument);
+            const diddocMetadataObject = JsonTransformer.fromJSON(JSON.parse(diddocMetadata), DidDocument);
             //hit rest api endpoint to verify resolution of metadata elements
             //NB: this will be implemented in a later issue
-            return Promise.resolve(JSON.stringify(diddocObject));
+            return Promise.resolve(JSON.stringify(diddocMetadataObject));
         }catch(err){
             throw new Error("Unable to parse DIDDoc into JSON in didResolveMetaData method");
         }
