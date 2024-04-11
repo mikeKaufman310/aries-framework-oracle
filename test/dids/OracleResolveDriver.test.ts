@@ -1,3 +1,4 @@
+import { DidDocument } from '@credo-ts/core';
 import {OracleResolveDriver} from '../../src/dids/OracleResolveDriver';
 import axios from 'axios';
 declare function assert(value: unknown): asserts value;
@@ -6,7 +7,7 @@ declare function assert(value: unknown): asserts value;
 /**
  * File to test methods in oracle Resolve Driver class
  * @author Michael Kaufman
- * Date Last Modified: Apr 5, 2024
+ * Date Last Modified: Apr 10, 2024
  */
 
 
@@ -102,7 +103,25 @@ test('Test 11: Invalid Config File Passed', () => {
 });
 
 
+//didResolveMetaData function
+test('Test 12: Invalid DID passed', ()=>{
+    const driver = new OracleResolveDriver();
+    expect(()=>{driver.didResolveMetaData("")}).toThrow();
+});
 
+test('Test 13: Valid Params passed and REST call made, success', ()=>{
+    const driver = new OracleResolveDriver();
+    const mockDidDoc: DidDocument = new DidDocument({
+        id: "did:test:123"
+    });
+    expect(()=>{driver.didResolveMetaData(JSON.stringify(mockDidDoc))}).not.toThrow();
+});
 
+test('Test 14: Valid Params passed and REST call not made, failure ', ()=>{
+    const driver = new OracleResolveDriver();
+    expect(()=>{driver.didResolveMetaData('test')}).toThrow();
+});
 
-
+test('Test 15: Valid Params passed and REST call made, failure UNIMPLEMENTED', ()=>{
+    expect(false);//TO BE IMPLEMENTED
+});

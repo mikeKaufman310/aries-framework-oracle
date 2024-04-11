@@ -1,13 +1,16 @@
-import type {DidResolver, DidResolutionResult} from '@credo-ts/core'
+import {type DidResolver, type DidResolutionResult, DidDocument} from '@credo-ts/core';
 import * as fs from 'fs';
 import axios from 'axios';
+import { JsonTransformer } from '@credo-ts/core';
+import { Metadata } from '@credo-ts/core/build/storage/Metadata';
+import {  DidDocumentMetadata } from "./DidDocumentMetadata";
 
 /**
  * Class to implemented a DID Resolver Driver to be a part of DIF Universal Resolver 
  * @author Michael Kaufman
  * @summary Implements a DID Resolver Driver using previously implemented functions in 
  * Oracle codebase, as well as using functions from Open-Wallet Credo's typescript DID libraries
- * Date Last Modified: Apr 5, 2024
+ * Date Last Modified: Apr 10, 2024
  */
 export class OracleResolveDriver{
     
@@ -127,6 +130,25 @@ export class OracleResolveDriver{
           } catch (err) {
             return Promise.resolve(-1);
           }
+    }
+
+    /**
+     * Method to resolve a DIDDoc's metadata and use/verify any of its elements before next stage of resolution
+     * @param diddoc DIDDoc metadata to be resolved and have verified metadata after resolution
+     * @returns Promise of DIDDoc metadata (string) after manipulated metadata for verification or error type
+     */
+    public didResolveMetaData(diddocMetadata: string): Promise<any>{
+        if(diddocMetadata.length <= 0){
+            throw new Error("Invalid params passed to didResolveMetaData method");
+        }
+        try{
+            const diddocMetadataObject = JsonTransformer.fromJSON(JSON.parse(diddocMetadata),DidDocumentMetadata);
+            //hit rest api endpoint to verify resolution of metadata elements
+            //NB: this will be implemented in a later issue
+            return Promise.resolve(JSON.stringify(diddocMetadataObject));
+        }catch(err){
+            throw new Error("Unable to parse DIDDoc into JSON in didResolveMetaData method");
+        }
     }
 }
 
