@@ -1,4 +1,4 @@
-import {type DidResolver, type DidResolutionResult, DidDocument} from '@credo-ts/core';
+import {type DidResolver, type DidResolutionResult, DidDocument, VerificationMethod} from '@credo-ts/core';
 import * as fs from 'fs';
 import axios from 'axios';
 import { JsonTransformer } from '@credo-ts/core';
@@ -166,7 +166,17 @@ export class OracleResolveDriver{
             if(diddocObject.verificationMethod == null){
                 return Promise.resolve(JSON.stringify(diddocObject));
             }
-            const verificationMethodObject = diddocObject.dereferenceVerificationMethod();
+            let positionOfKeyId:number = diddocObject.id.indexOf('#key-')+6;
+            let keyIdString: string = diddocObject.id[positionOfKeyId];
+            let charOffset = 1;
+            let nextChar = diddocObject.id[positionOfKeyId+charOffset];
+            let regex: RegExp = /^[0-9]$/;
+            while(regex.test(nextChar)){
+                keyIdString+=nextChar;
+                charOffset++;
+                nextChar = diddocObject.id[positionOfKeyId+charOffset];
+            }
+            var verificationMethodObject: VerificationMethod = diddocObject.dereferenceVerificationMethod(keyIdString);
         }catch(err){
             throw new Error("Unable to parse DIDDoc into JSON in didWrapVerificationMethod method");
         }
