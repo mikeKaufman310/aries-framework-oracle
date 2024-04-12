@@ -150,5 +150,24 @@ export class OracleResolveDriver{
             throw new Error("Unable to parse DIDDoc into JSON in didResolveMetaData method");
         }
     }
+
+    /**
+     * Method to do w3c pubkey context pushing
+     * @param didDoc  DIDDoc Resolution Result's DIDDoc field
+     * @param option option of key to context push
+     * @summary Summary of Options:
+     * Option 1: ED25519 2020
+     * Option 2: ED25519 2018
+     * Option 3: JWK 2020
+     * Option 4: Test Push
+     * @returns boolean of success of method
+     */
+    public didContextPush(didDoc: DidDocument, option: number): boolean{
+        //check valid params passed
+        //access document context
+        //push to w3c based on option
+        //return boolean after push
+        return false;//temporary return method
+    }
 }
 
