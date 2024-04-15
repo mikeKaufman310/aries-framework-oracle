@@ -10,7 +10,7 @@ import {  DidDocumentMetadata } from "./DidDocumentMetadata";
  * @author Michael Kaufman
  * @summary Implements a DID Resolver Driver using previously implemented functions in 
  * Oracle codebase, as well as using functions from Open-Wallet Credo's typescript DID libraries
- * Date Last Modified: Apr 10, 2024
+ * Date Last Modified: Apr 14, 2024
  */
 export class OracleResolveDriver{
     
