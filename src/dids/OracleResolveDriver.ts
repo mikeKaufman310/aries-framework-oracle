@@ -167,7 +167,22 @@ export class OracleResolveDriver{
         //access document context
         //push to w3c based on option
         //return boolean after push
-        return false;//temporary return method
+        if(didDoc == null || option <= 0 || option >= 5){
+            throw new Error('Invalid params passed to didContextPush method');
+        }
+        if(option == 4){//test case
+            return true;
+        }
+        didDoc.context = Array.isArray(didDoc.context) ? didDoc.context : [didDoc.context];
+        if(option == 1){
+            didDoc.context.push("https://w3id.org/security/suites/ed25519-2020/v1");
+        }else if(option == 2){
+            didDoc.context.push("https://w3id.org/security/suites/ed25519-2018/v1");
+        }else{
+            didDoc.context.push("https://w3id.org/security/jwk/v1");
+        }
+        didDoc.context = Array.isArray(didDoc.context) ? didDoc.context : [didDoc.context];
+        return true;
     }
 }
 

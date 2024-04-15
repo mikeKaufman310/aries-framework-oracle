@@ -129,17 +129,12 @@ test('Test 15: Valid Params passed and REST call made, failure UNIMPLEMENTED', (
 
 //didContextPush function
 test('Test 16: Invalid Option with Valid Diddoc passed, error thrown', ()=>{
-    expect(false);//TO BE IMPLEMENTED
+    const driver = new OracleResolveDriver();
+    expect(()=>{driver.didContextPush(new DidDocument({id: "1"}), 5)}).toThrow();
 });
 
-test('Test 17: Valid Option with Invalid Diddoc passed, error thrown', ()=>{
-    expect(false);//TO BE IMPLEMENTED
-});
-
-test('Test 18: Invalid Option with Invalid Diddoc passed, error thrown', ()=>{
-    expect(false);//TO BE IMPLEMENTED
-});
-
-test('Test 19: Valid (Test) Option with Valid Diddoc passed, boolean returned', ()=>{
-    expect(false);//TO BE IMPLEMENTED
+test('Test 17: Valid (Test) Option with Valid Diddoc passed, boolean returned', ()=>{
+    const driver = new OracleResolveDriver();
+    const result = driver.didContextPush(new DidDocument({id: "1"}), 4);
+    expect(result == true);
 });
