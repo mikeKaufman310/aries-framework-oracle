@@ -4,6 +4,7 @@ import axios from 'axios';
 import { JsonTransformer } from '@credo-ts/core';
 import { Metadata } from '@credo-ts/core/build/storage/Metadata';
 import {  DidDocumentMetadata } from "./DidDocumentMetadata";
+import { ResolutionResult } from './ResolutionResult';
 
 /**
  * Class to implemented a DID Resolver Driver to be a part of DIF Universal Resolver 
@@ -137,7 +138,7 @@ export class OracleResolveDriver{
      * @param diddoc DIDDoc metadata to be resolved and have verified metadata after resolution
      * @returns Promise of DIDDoc metadata (string) after manipulated metadata for verification or error type
      */
-    public didResolveMetaData(diddocMetadata: string): Promise<any>{
+    public didResolveMetaData(diddocMetadata: string): string{
         if(diddocMetadata.length <= 0){
             throw new Error("Invalid params passed to didResolveMetaData method");
         }
@@ -145,7 +146,7 @@ export class OracleResolveDriver{
             const diddocMetadataObject = JsonTransformer.fromJSON(JSON.parse(diddocMetadata),DidDocumentMetadata);
             //hit rest api endpoint to verify resolution of metadata elements
             //NB: this will be implemented in a later issue
-            return Promise.resolve(JSON.stringify(diddocMetadataObject));
+            return JSON.stringify(diddocMetadataObject);
         }catch(err){
             throw new Error("Unable to parse DIDDoc into JSON in didResolveMetaData method");
         }
@@ -183,6 +184,44 @@ export class OracleResolveDriver{
         }
         didDoc.context = Array.isArray(didDoc.context) ? didDoc.context : [didDoc.context];
         return true;
+    }
+
+    /**
+     * Acts as main resolver method that calls all helper methods in flow
+     * @param did string
+     * @param queryDirectory directory for querying ledger credentials
+     * @returns promise of resolved did document after processes
+     */
+    public Resolve(did: string, queryDirectory: string): ResolutionResult{
+        //check params
+        //call didResolve method
+        //call didResolveMetaData method
+        //call didContextPush method
+        //return didDoc after all method calls
+        if(did.length <= 0 || queryDirectory.length <= 0){
+            throw new Error("Invalid Params passed to Resolve method");
+        }
+        const resolutionResultJson = this.didResolve(did, queryDirectory);
+        const resolutionResult = JsonTransformer.fromJSON(resolutionResultJson, ResolutionResult);
+        try{
+            const resultMetadata = this.didResolveMetaData(JSON.stringify(resolutionResult.metaData1));
+            console.log("Verified Metadata: " + resultMetadata);
+        }catch(err){
+            throw new Error("Unable to verify did resolution in Resolve method");
+        }
+        let keyOption = 0;
+        if(resolutionResult.didDoc.verificationMethod !== undefined && resolutionResult.didDoc.verificationMethod[0].type == "Ed25519VerificationKey2020" ){
+            keyOption = 1;
+        }else if(resolutionResult.didDoc.verificationMethod !== undefined && resolutionResult.didDoc.verificationMethod[0].type == "Ed25519VerificationKey2018"){
+            keyOption = 2;
+        }else{
+            keyOption = 3;
+        }
+        const contextPushSuccess = this.didContextPush(resolutionResult.didDoc, keyOption);
+        if(!contextPushSuccess){
+            throw new Error("Resolution result not W3C compliant; error in Resolve method");
+        }
+        return resolutionResult;
     }
 }
 

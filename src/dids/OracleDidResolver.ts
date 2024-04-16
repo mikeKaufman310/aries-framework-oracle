@@ -3,6 +3,8 @@ import { orclIdentifierRegex , parseOracleDid } from "./identifiers";
 import { DidDocument, AriesFrameworkError, utils, JsonTransformer } from '@aries-framework/core'
 
 import { OracleLedgerService } from '../ledger';
+import { OracleResolveDriver } from './OracleResolveDriver';
+import { DidDocumentMetadata } from './DidDocumentMetadata';
 
 export class OracleDidResolver implements DidResolver {
   public readonly supportedMethods = ['orcl']
@@ -45,22 +47,25 @@ export class OracleDidResolver implements DidResolver {
 
   private async resolveDidDoc(agentContext: AgentContext, did: string): Promise<DidResolutionResult> {
     
-    const oracleLedgerService = agentContext.dependencyManager.resolve(OracleLedgerService);
+    //const oracleLedgerService = agentContext.dependencyManager.resolve(OracleLedgerService);
+//
+    //const didDocument = await oracleLedgerService.resolve(did);
+//
+    //// TEMP : add assertion here
+    //const didDocumentJson = JsonTransformer.fromJSON(didDocument, DidDocument);
+    //didDocumentJson.context = Array.isArray(didDocumentJson.context) ? didDocumentJson.context : [didDocumentJson.context];
+    //didDocumentJson.context.push("https://w3id.org/security/suites/ed25519-2018/v1");
+    //didDocumentJson.context = Array.isArray(didDocumentJson.context) ? didDocumentJson.context : [didDocumentJson.context];
+    //didDocumentJson.assertionMethod = [didDocument.verificationMethod[0].id];
+    //didDocumentJson.authentication = [didDocument.verificationMethod[0].id];
 
-    const didDocument = await oracleLedgerService.resolve(did);
-
-    // TEMP : add assertion here
-    const didDocumentJson = JsonTransformer.fromJSON(didDocument, DidDocument);
-    didDocumentJson.context = Array.isArray(didDocumentJson.context) ? didDocumentJson.context : [didDocumentJson.context];
-    didDocumentJson.context.push("https://w3id.org/security/suites/ed25519-2018/v1");
-    didDocumentJson.context = Array.isArray(didDocumentJson.context) ? didDocumentJson.context : [didDocumentJson.context];
-    didDocumentJson.assertionMethod = [didDocument.verificationMethod[0].id];
-    didDocumentJson.authentication = [didDocument.verificationMethod[0].id];
+    const resolver: OracleResolveDriver = new OracleResolveDriver();
+    const didResolutionJson = resolver.Resolve(did, '/transcripts/ledgerConfig.txt');
 
     return {
-      didDocument: didDocumentJson, // JsonTransformer.fromJSON(didDocument, DidDocument)
-      didDocumentMetadata: {},
-      didResolutionMetadata: {},
+      didDocument:  JsonTransformer.fromJSON(didResolutionJson.didDoc, DidDocument),
+      didDocumentMetadata: JsonTransformer.fromJSON(didResolutionJson.metaData1, DidDocumentMetadata),
+      didResolutionMetadata: JsonTransformer.fromJSON(didResolutionJson.metaData2, DidDocumentMetadata),
     };
   }
 }
