@@ -138,3 +138,25 @@ test('Test 17: Valid (Test) Option with Valid Diddoc passed, boolean returned', 
     const result = driver.didContextPush(new DidDocument({id: "1"}), 4);
     expect(result == true);
 });
+
+
+//Resolve function
+test('Test 18: Valid DID string passed with invalid query string', ()=>{
+    const driver = new OracleResolveDriver();
+    expect(()=>{driver.Resolve("did:test:1234", "")}).toThrow();
+});
+
+test('Test 19: Invalid DID string passed with valid query string', ()=>{
+    const driver = new OracleResolveDriver();
+    expect(()=>{driver.Resolve("", mockDirectory)}).toThrow();
+});
+
+test('Test 20: Invalid DID string passed with invalid query string', ()=>{
+    const driver = new OracleResolveDriver();
+    expect(()=>{driver.Resolve("", "")}).toThrow();
+});
+
+test('Test 21: Valid DID string passed with valid query string', ()=>{
+    const driver = new OracleResolveDriver();
+    expect(()=>{driver.Resolve("did:test:1234", mockDirectory)}).not.toThrow();
+});

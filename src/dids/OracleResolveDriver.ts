@@ -204,18 +204,27 @@ export class OracleResolveDriver{
         const resolutionResultJson = this.didResolve(did, queryDirectory);
         const resolutionResult = JsonTransformer.fromJSON(resolutionResultJson, ResolutionResult);
         try{
-            const resultMetadata = this.didResolveMetaData(JSON.stringify(resolutionResult.metaData1));
+            const metadataStr = JSON.stringify(resolutionResult.metaData1);
+            const resultMetadata = this.didResolveMetaData(metadataStr);//throws error here
             console.log("Verified Metadata: " + resultMetadata);
         }catch(err){
             throw new Error("Unable to verify did resolution in Resolve method");
         }
         let keyOption = 0;
-        if(resolutionResult.didDoc.verificationMethod !== undefined && resolutionResult.didDoc.verificationMethod[0].type == "Ed25519VerificationKey2020" ){
-            keyOption = 1;
-        }else if(resolutionResult.didDoc.verificationMethod !== undefined && resolutionResult.didDoc.verificationMethod[0].type == "Ed25519VerificationKey2018"){
-            keyOption = 2;
-        }else{
-            keyOption = 3;
+        try{
+            if(typeof resolutionResult.didDoc.verificationMethod !== "undefined"){
+                if(resolutionResult.didDoc.verificationMethod[0].type == "Ed25519VerificationKey2020" ){
+                    keyOption = 1;
+                }else if(resolutionResult.didDoc.verificationMethod[0].type == "Ed25519VerificationKey2018"){
+                    keyOption = 2;
+                }else if(queryDirectory != "TEST"){
+                    keyOption = 3;
+                }else{
+                    keyOption = 4;
+                }
+            }
+        }catch(err){
+            throw new Error("Verification method of resolution result is undefined in Resolve method");
         }
         const contextPushSuccess = this.didContextPush(resolutionResult.didDoc, keyOption);
         if(!contextPushSuccess){
