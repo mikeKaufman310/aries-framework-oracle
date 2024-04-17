@@ -167,19 +167,20 @@ export class OracleResolveDriver{
         //access document context
         //push to w3c based on option
         //return boolean after push
-        if(didDoc == null || option <= 0 || option >= 5){
+        if(didDoc == null || option <= 0 || option >= 4){
             throw new Error('Invalid params passed to didContextPush method');
         }
-        if(option == 4){//test case
-            return true;
-        }
         didDoc.context = Array.isArray(didDoc.context) ? didDoc.context : [didDoc.context];
+        let newContextSize = 0;
         if(option == 1){
-            didDoc.context.push("https://w3id.org/security/suites/ed25519-2020/v1");
+            newContextSize = didDoc.context.push("https://w3id.org/security/suites/ed25519-2020/v1");
         }else if(option == 2){
-            didDoc.context.push("https://w3id.org/security/suites/ed25519-2018/v1");
+            newContextSize = didDoc.context.push("https://w3id.org/security/suites/ed25519-2018/v1");
         }else{
-            didDoc.context.push("https://w3id.org/security/jwk/v1");
+            newContextSize = didDoc.context.push("https://w3id.org/security/jwk/v1");
+        }
+        if(newContextSize <= 0){
+            throw new Error('Unable to push context to url ${option} in didContextPush method');
         }
         didDoc.context = Array.isArray(didDoc.context) ? didDoc.context : [didDoc.context];
         return true;
