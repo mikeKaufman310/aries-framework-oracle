@@ -1,18 +1,18 @@
-import { DidDocument } from "@credo-ts/core";
-import { DidDocumentMetadata } from "./DidDocumentMetadata";
+import { DidDocument, DidResolutionResult } from "@credo-ts/core";
+import { DidDocMetadata } from "./DidDocMetadata";
 
-interface ResolutionResultOptions{
-    didDoc: DidDocument,
-    metaData1? : DidDocumentMetadata,
-    metaData2? : DidDocumentMetadata
-}
+/**
+ * Class to implement credo did resolution result interface in an instiable class
+ * @author Michael Kaufman
+ * Date Last Modified: April 17, 2024
+ */
 export declare class ResolutionResult{
     created?: string;
     update?: string;
     method?: string | string[];
     didDoc: DidDocument;
-    metaData1? : DidDocumentMetadata;
-    metaData2? : DidDocumentMetadata;
-    constructor(options:ResolutionResultOptions);
+    metaData1? : DidDocMetadata;
+    metaData2? : DidDocMetadata;
+    constructor(options:DidResolutionResult);
     toJSON(): Record<string, any>;
 }

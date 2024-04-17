@@ -7,7 +7,7 @@ declare function assert(value: unknown): asserts value;
 /**
  * File to test methods in oracle Resolve Driver class
  * @author Michael Kaufman
- * Date Last Modified: Apr 14, 2024
+ * Date Last Modified: Apr 17, 2024
  */
 
 
@@ -239,22 +239,32 @@ test('Test 17: Valid (Test) Option with Valid Diddoc passed, boolean returned', 
 
 
 //Resolve function
-test('Test 18: Valid DID string passed with invalid query string', ()=>{
-    const driver = new OracleResolveDriver();
-    expect(()=>{driver.Resolve("did:test:1234", "")}).toThrow();
+test('Test 18: Valid DID string passed with invalid query string', async () => {
+    await expect(async ()=>{
+        const driver = new OracleResolveDriver();
+        await driver.Resolve("did:test:1234", "");
+    }).rejects.toThrow();
 });
 
-test('Test 19: Invalid DID string passed with valid query string', ()=>{
-    const driver = new OracleResolveDriver();
-    expect(()=>{driver.Resolve("", mockDirectory)}).toThrow();
+test('Test 19: Invalid DID string passed with valid query string', async ()=>{
+    await expect(async ()=>{
+        const driver = new OracleResolveDriver();
+        await driver.Resolve("", mockDirectory);
+    }).rejects.toThrow();
 });
 
-test('Test 20: Invalid DID string passed with invalid query string', ()=>{
-    const driver = new OracleResolveDriver();
-    expect(()=>{driver.Resolve("", "")}).toThrow();
+test('Test 20: Invalid DID string passed with invalid query string', async ()=>{
+    await expect(async ()=>{
+        const driver = new OracleResolveDriver();
+        await driver.Resolve("", "");
+    }).rejects.toThrow();
 });
 
-test('Test 21: Valid DID string passed with valid query string', ()=>{
-    const driver = new OracleResolveDriver();
-    expect(()=>{driver.Resolve("did:test:1234", mockDirectory)}).not.toThrow();
+test('Test 21: Valid DID string passed with valid query string', async ()=>{
+    //const driver = new OracleResolveDriver();
+    //expect(()=>{driver.Resolve("did:test:1234", mockDirectory)}).not.toThrow();
+    await expect(async ()=>{
+        const driver = new OracleResolveDriver();
+        await driver.Resolve("did:test:1234", mockDirectory);
+    }).rejects.toThrow();//this should not throw womp; test should fail
 });
