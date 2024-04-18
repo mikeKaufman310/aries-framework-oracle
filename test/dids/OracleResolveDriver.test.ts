@@ -18,106 +18,9 @@ const mockDidText = "mockDid";
 const mockQueryText = "mockDirectoryForQuery";
 const mockDid = "did:oracle:test";
 const mockDirectory = "TEST";
-const tempValidDidDocumentStr: string = fs.readFileSync(process.cwd() + "/test/dids/constants/validDid.json", 'utf-8');
-const validDidDocumentInstance = JsonTransformer.fromJSON(JSON.parse(tempValidDidDocumentStr), DidDocument);
-//const validDidDocumentInstance = new DidDocument({
-//    id: 'did:example:123',
-//    alsoKnownAs: ['did:example:456'],
-//    controller: ['did:example:456'],
-//    verificationMethod: [
-//      new VerificationMethod({
-//        id: 'did:example:123#key-1',
-//        type: 'RsaVerificationKey2018',
-//        controller: 'did:sov:LjgpST2rjsoxYegQDRm7EL',
-//        publicKeyPem: '-----BEGIN PUBLIC X...',
-//      }),
-//      new VerificationMethod({
-//        id: 'did:example:123#key-2',
-//        type: 'Ed25519VerificationKey2018',
-//        controller: 'did:sov:LjgpST2rjsoxYegQDRm7EL',
-//        publicKeyBase58: '-----BEGIN PUBLIC 9...',
-//      }),
-//      new VerificationMethod({
-//        id: 'did:example:123#key-3',
-//        type: 'Secp256k1VerificationKey2018',
-//        controller: 'did:sov:LjgpST2rjsoxYegQDRm7EL',
-//        publicKeyHex: '-----BEGIN PUBLIC A...',
-//      }),
-//    ],
-//    service: [
-//      new DidDocumentService({
-//        id: 'did:example:123#service-1',
-//        type: 'Mediator',
-//        serviceEndpoint: 'did:sov:Q4zqM7aXqm7gDQkUVLng9h',
-//      }),
-//      new IndyAgentService({
-//        id: 'did:example:123#service-2',
-//        serviceEndpoint: 'did:sov:Q4zqM7aXqm7gDQkUVLng9h',
-//        recipientKeys: ['Q4zqM7aXqm7gDQkUVLng9h'],
-//        routingKeys: ['Q4zqM7aXqm7gDQkUVLng9h'],
-//        priority: 5,
-//      }),
-//      new DidCommV1Service({
-//        id: 'did:example:123#service-3',
-//        serviceEndpoint: 'https://agent.com/did-comm',
-//        recipientKeys: ['DADEajsDSaksLng9h'],
-//        routingKeys: ['DADEajsDSaksLng9h'],
-//        priority: 10,
-//      }),
-//    ],
-//    authentication: [
-//      'did:example:123#key-1',
-//      new VerificationMethod({
-//        id: 'did:example:123#authentication-1',
-//        type: 'RsaVerificationKey2018',
-//        controller: 'did:sov:LjgpST2rjsoxYegQDRm7EL',
-//        publicKeyPem: '-----BEGIN PUBLIC A...',
-//      }),
-//    ],
-//    assertionMethod: [
-//      'did:example:123#key-1',
-//      new VerificationMethod({
-//        id: 'did:example:123#assertionMethod-1',
-//        type: 'RsaVerificationKey2018',
-//        controller: 'did:sov:LjgpST2rjsoxYegQDRm7EL',
-//        publicKeyPem: '-----BEGIN PUBLIC A...',
-//      }),
-//    ],
-//    capabilityDelegation: [
-//      'did:example:123#key-1',
-//      new VerificationMethod({
-//        id: 'did:example:123#capabilityDelegation-1',
-//        type: 'RsaVerificationKey2018',
-//        controller: 'did:sov:LjgpST2rjsoxYegQDRm7EL',
-//        publicKeyPem: '-----BEGIN PUBLIC A...',
-//      }),
-//    ],
-//    capabilityInvocation: [
-//      'did:example:123#key-1',
-//      new VerificationMethod({
-//        id: 'did:example:123#capabilityInvocation-1',
-//        type: 'RsaVerificationKey2018',
-//        controller: 'did:sov:LjgpST2rjsoxYegQDRm7EL',
-//        publicKeyPem: '-----BEGIN PUBLIC A...',
-//      }),
-//    ],
-//    keyAgreement: [
-//      'did:example:123#key-1',
-//      new VerificationMethod({
-//        id: 'did:example:123#keyAgreement-1',
-//        type: 'RsaVerificationKey2018',
-//        controller: 'did:sov:LjgpST2rjsoxYegQDRm7EL',
-//        publicKeyPem: '-----BEGIN PUBLIC A...',
-//      }),
-//      new VerificationMethod({
-//        id: 'did:example:123#keyAgreement-1',
-//        type: 'Ed25519VerificationKey2018',
-//        controller: 'did:sov:LjgpST2rjsoxYegQDRm7EL',
-//        publicKeyPem: '-----BEGIN PUBLIC A...',
-//      }),
-//    ],
-//  });//Note: taken from credo-ts/core test repository
-//
+const validDidDocumentInstance = JsonTransformer.fromJSON(JSON.parse(fs.readFileSync(process.cwd() + "/test/dids/constants/validDid.json", 'utf-8')), DidDocument);
+const invalidDidDocumentInstance = JsonTransformer.fromJSON(JSON.parse(fs.readFileSync(process.cwd() + "/test/dids/constants/invalidDid.json", 'utf-8')), DidDocument);
+
 
 
 //didResolve function
@@ -238,4 +141,13 @@ test('Test 17: Valid (Test) Option with Valid Diddoc passed, boolean returned', 
     const result = driver.didContextPush(validDidDocumentInstance, 2);
     expect(()=>{driver.didContextPush(validDidDocumentInstance, 2)}).not.toThrow();
     expect(result == true);
+});
+
+
+test('Test 18: Valid (Test) Option with Invalid Diddoc passed, boolean returned', ()=>{
+    const driver = new OracleResolveDriver();
+    const result = driver.didContextPush(invalidDidDocumentInstance, 2);
+    expect(()=>{driver.didContextPush(invalidDidDocumentInstance, 2)}).not.toThrow();
+    //console.log(result);
+    expect(result).toBe(false);
 });

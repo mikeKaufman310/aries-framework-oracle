@@ -167,11 +167,17 @@ export class OracleResolveDriver{
         //access document context
         //push to w3c based on option
         //return boolean after push
+        
         if(didDoc == null || option <= 0 || option >= 4){
             throw new Error('Invalid params passed to didContextPush method');
         }
         didDoc.context = Array.isArray(didDoc.context) ? didDoc.context : [didDoc.context];
+        const canPush: boolean = (typeof didDoc.verificationMethod !== "undefined") && ((didDoc.verificationMethod[0].type == "Ed25519VerificationKey2018") || (didDoc.verificationMethod[0].type == "Ed25519VerificationKey2020")||(didDoc.verificationMethod[0].type == "Ed25519VerificationKey2018")||(didDoc.verificationMethod[0].type == "JsonWebKey2020"));
         let newContextSize = 0;
+        if(!canPush){
+            console.error('Unable to push context to url ${option} in didContextPush method');
+            return false;
+        }
         if(option == 1){
             newContextSize = didDoc.context.push("https://w3id.org/security/suites/ed25519-2020/v1");
         }else if(option == 2){
@@ -179,8 +185,8 @@ export class OracleResolveDriver{
         }else{
             newContextSize = didDoc.context.push("https://w3id.org/security/jwk/v1");
         }
-        if(newContextSize <= 0){
-            throw new Error('Unable to push context to url ${option} in didContextPush method');
+        if(newContextSize<=0){
+            throw new Error("Error when pushing key type to w3c context in didContextPush method");
         }
         didDoc.context = Array.isArray(didDoc.context) ? didDoc.context : [didDoc.context];
         return true;
