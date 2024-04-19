@@ -1,22 +1,25 @@
-import { DidDocument } from '@credo-ts/core';
+import { DidCommV1Service, DidDocument, DidDocumentService, IndyAgentService, JsonTransformer, VerificationMethod } from '@credo-ts/core';
 import {OracleResolveDriver} from '../../src/dids/OracleResolveDriver';
 import axios from 'axios';
+import * as fs from 'fs';
 declare function assert(value: unknown): asserts value;
 
 
 /**
  * File to test methods in oracle Resolve Driver class
  * @author Michael Kaufman
- * Date Last Modified: Apr 10, 2024
+ * Date Last Modified: Apr 14, 2024
  */
 
 
 
 //fields for mock resoution calls
-var mockDidText = "mockDid";
-var mockQueryText = "mockDirectoryForQuery";
-var mockDid = "did:oracle:test";
-var mockDirectory = "TEST";
+const mockDidText = "mockDid";
+const mockQueryText = "mockDirectoryForQuery";
+const mockDid = "did:oracle:test";
+const mockDirectory = "TEST";
+const validDidDocumentInstance = JsonTransformer.fromJSON(JSON.parse(fs.readFileSync(process.cwd() + "/test/dids/constants/validDid.json", 'utf-8')), DidDocument);
+const invalidDidDocumentInstance = JsonTransformer.fromJSON(JSON.parse(fs.readFileSync(process.cwd() + "/test/dids/constants/invalidDid.json", 'utf-8')), DidDocument);
 
 
 
@@ -124,4 +127,27 @@ test('Test 14: Valid Params passed and REST call not made, failure ', ()=>{
 
 test('Test 15: Valid Params passed and REST call made, failure UNIMPLEMENTED', ()=>{
     expect(false);//TO BE IMPLEMENTED
+});
+
+
+//didContextPush function
+test('Test 16: Invalid Option with Valid Diddoc passed, error thrown', ()=>{
+    const driver = new OracleResolveDriver();
+    expect(()=>{driver.didContextPush(new DidDocument({id: "1"}), 5)}).toThrow();
+});
+
+test('Test 17: Valid (Test) Option with Valid Diddoc passed, boolean returned', ()=>{
+    const driver = new OracleResolveDriver();
+    const result = driver.didContextPush(validDidDocumentInstance, 2);
+    expect(()=>{driver.didContextPush(validDidDocumentInstance, 2)}).not.toThrow();
+    expect(result == true);
+});
+
+
+test('Test 18: Valid (Test) Option with Invalid Diddoc passed, boolean returned', ()=>{
+    const driver = new OracleResolveDriver();
+    const result = driver.didContextPush(invalidDidDocumentInstance, 2);
+    expect(()=>{driver.didContextPush(invalidDidDocumentInstance, 2)}).not.toThrow();
+    //console.log(result);
+    expect(result).toBe(false);
 });

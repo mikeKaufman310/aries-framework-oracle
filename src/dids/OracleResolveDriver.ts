@@ -10,7 +10,7 @@ import {  DidDocumentMetadata } from "./DidDocumentMetadata";
  * @author Michael Kaufman
  * @summary Implements a DID Resolver Driver using previously implemented functions in 
  * Oracle codebase, as well as using functions from Open-Wallet Credo's typescript DID libraries
- * Date Last Modified: Apr 10, 2024
+ * Date Last Modified: Apr 14, 2024
  */
 export class OracleResolveDriver{
     
@@ -149,6 +149,47 @@ export class OracleResolveDriver{
         }catch(err){
             throw new Error("Unable to parse DIDDoc into JSON in didResolveMetaData method");
         }
+    }
+
+    /**
+     * Method to do w3c pubkey context pushing
+     * @param didDoc  DIDDoc Resolution Result's DIDDoc field
+     * @param option option of key to context push
+     * @summary Summary of Options:
+     * Option 1: ED25519 2020
+     * Option 2: ED25519 2018
+     * Option 3: JWK 2020
+     * Option 4: Test Push
+     * @returns boolean of success of method
+     */
+    public didContextPush(didDoc: DidDocument, option: number): boolean{
+        //check valid params passed
+        //access document context
+        //push to w3c based on option
+        //return boolean after push
+        
+        if(didDoc == null || option <= 0 || option >= 4){
+            throw new Error('Invalid params passed to didContextPush method');
+        }
+        didDoc.context = Array.isArray(didDoc.context) ? didDoc.context : [didDoc.context];
+        const canPush: boolean = (typeof didDoc.verificationMethod !== "undefined") && ((didDoc.verificationMethod[0].type == "Ed25519VerificationKey2018") || (didDoc.verificationMethod[0].type == "Ed25519VerificationKey2020")||(didDoc.verificationMethod[0].type == "Ed25519VerificationKey2018")||(didDoc.verificationMethod[0].type == "JsonWebKey2020"));
+        let newContextSize = 0;
+        if(!canPush){
+            console.error('Unable to push context to url ${option} in didContextPush method');
+            return false;
+        }
+        if(option == 1){
+            newContextSize = didDoc.context.push("https://w3id.org/security/suites/ed25519-2020/v1");
+        }else if(option == 2){
+            newContextSize = didDoc.context.push("https://w3id.org/security/suites/ed25519-2018/v1");
+        }else{
+            newContextSize = didDoc.context.push("https://w3id.org/security/jwk/v1");
+        }
+        if(newContextSize<=0){
+            throw new Error("Error when pushing key type to w3c context in didContextPush method");
+        }
+        didDoc.context = Array.isArray(didDoc.context) ? didDoc.context : [didDoc.context];
+        return true;
     }
 }
 
