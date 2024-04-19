@@ -1,4 +1,7 @@
 {
+  "@context": [
+  "https://www.w3.org/ns/did/v1"
+  ],
     "id": "did:example:123",
     "alsoKnownAs": ["did:example:456"],
     "controller": ["did:example:456"],
@@ -6,7 +9,7 @@
       {
         "id": "did:example:123#key-2",
         "type": "Ed25519VerificationKey2018",
-        "controller": "did:sov:LjgpST2rjsoxYegQDRm7EL",
+        "controller": "did:orcl:LjgpST2rjsoxYegQDRm7EL",
         "publicKeyBase58": "-----BEGIN PUBLIC 9..."
       }
     ],
