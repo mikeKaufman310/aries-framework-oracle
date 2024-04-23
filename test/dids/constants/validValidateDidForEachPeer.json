@@ -1,0 +1,9 @@
+{
+    "chaincode": "example123",
+    "args": [
+        "ValidateDIDForEachPeer",
+        "did",
+        ["peer123", "peer456", "peer789"]
+    ],
+    "sync": true
+}

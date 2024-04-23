@@ -159,6 +159,8 @@ test('Test 19: Valid DID string passed with invalid query string', async () => {
     }).rejects.toThrow();
 });
 
+///NB: need to implement mock agent context and orclLedgerService for test suite
+
 test('Test 20: Invalid DID string passed with valid query string', async ()=>{
     await expect(async ()=>{
         const driver = new OracleResolveDriver();

@@ -1,14 +1,14 @@
-import type { AgentContext, DidResolutionResult, DidResolver, ParsedDid } from '@aries-framework/core'
+import type { AgentContext, DidResolutionResult, DidResolver, ParsedDid } from '@credo-ts/core'
 import { orclIdentifierRegex , parseOracleDid } from "./identifiers";
-import { DidDocument, AriesFrameworkError, utils, JsonTransformer } from '@aries-framework/core'
+import { DidDocument, utils, JsonTransformer } from '@credo-ts/core'
 
 import { OracleLedgerService } from '../ledger';
 import { OracleResolveDriver } from './OracleResolveDriver';
-import { DidDocumentMetadata } from './DidDocumentMetadata';
+import { DidDocMetadata } from './DidDocMetadata';
 
 export class OracleDidResolver implements DidResolver {
   public readonly supportedMethods = ['orcl']
-
+  allowsCaching: boolean = false;
   public async resolve(agentContext: AgentContext, did: string, parsed: ParsedDid): Promise<DidResolutionResult> {
     const didDocumentMetadata = {}
 
@@ -60,12 +60,12 @@ export class OracleDidResolver implements DidResolver {
     //didDocumentJson.authentication = [didDocument.verificationMethod[0].id];
 
     const resolver: OracleResolveDriver = new OracleResolveDriver();
-    const didResolutionJson = resolver.Resolve(did, '/transcripts/ledgerConfig.txt');
+    const didResolutionJson = await resolver.Resolve(did, '/transcripts/ledgerConfig.txt', agentContext);
 
     return {
       didDocument:  JsonTransformer.fromJSON(didResolutionJson.didDoc, DidDocument),
-      didDocumentMetadata: JsonTransformer.fromJSON(didResolutionJson.metaData1, DidDocumentMetadata),
-      didResolutionMetadata: JsonTransformer.fromJSON(didResolutionJson.metaData2, DidDocumentMetadata),
+      didDocumentMetadata: JsonTransformer.fromJSON(didResolutionJson.metaData1, DidDocMetadata),
+      didResolutionMetadata: JsonTransformer.fromJSON(didResolutionJson.metaData2, DidDocMetadata),
     };
   }
 }

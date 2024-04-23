@@ -1,0 +1,8 @@
+{
+    "chaincode": "example123",
+    "args": [
+        "GetPeerList",
+        "channel"
+    ],
+    "sync": true
+}

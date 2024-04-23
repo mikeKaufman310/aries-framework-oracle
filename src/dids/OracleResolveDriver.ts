@@ -1,4 +1,4 @@
-import {type DidResolver, type DidResolutionResult, DidDocument} from '@credo-ts/core';
+import {type DidResolver, type DidResolutionResult, DidDocument, AgentContext} from '@credo-ts/core';
 import * as fs from 'fs';
 import axios from 'axios';
 import { JsonTransformer } from '@credo-ts/core';
@@ -6,6 +6,7 @@ import { Metadata } from '@credo-ts/core/build/storage/Metadata';
 import { ResolutionResult } from './ResolutionResult';
 import type { DIDDocumentMetadata, DIDResolutionMetadata, DIDResolutionOptions, ParsedDID } from 'did-resolver';
 import { DidDocMetadata } from './DidDocMetadata';
+import { OracleLedgerService } from '../ledger';
 
 /**
  * Class to implemented a DID Resolver Driver to be a part of DIF Universal Resolver 
@@ -139,14 +140,20 @@ export class OracleResolveDriver{
      * @param diddoc DIDDoc metadata to be resolved and have verified metadata after resolution
      * @returns Promise of DIDDoc metadata (string) after manipulated metadata for verification or error type
      */
-    public didResolveMetaData(diddocMetadata: string): string{
+    public async didResolveMetaData(diddocMetadata: string, ledger: OracleLedgerService, did: string): Promise<string>{
         if(diddocMetadata.length <= 0){
             throw new Error("Invalid params passed to didResolveMetaData method");
         }
         try{
             const diddocMetadataObject = JsonTransformer.fromJSON(JSON.parse(diddocMetadata), DidDocMetadata);
             //hit rest api endpoint to verify resolution of metadata elements
-            //NB: this will be implemented in a later issue
+            
+            const peersListJson = await ledger.getPeerList("resolver");
+            const peersListStrArr = JSON.parse(peersListJson);
+            const verificationResult = await ledger.validateDIDForEachPeer(did, peersListStrArr);
+            if(JSON.stringify(verificationResult)!="Success"){
+                throw new Error("Invalid DID; found in didResolveMetaData method");
+            }
             return JSON.stringify(diddocMetadataObject);
         }catch(err){
             throw new Error("Unable to parse DIDDoc into JSON in didResolveMetaData method");
@@ -200,7 +207,7 @@ export class OracleResolveDriver{
      * @param queryDirectory directory for querying ledger credentials
      * @returns promise of resolved did document after processes
      */
-    async Resolve(did: string, queryDirectory: string): Promise<ResolutionResult>{
+    async Resolve(did: string, queryDirectory: string, agentContext: AgentContext): Promise<ResolutionResult>{
         //check params
         //call didResolve method
         //call didResolveMetaData method
@@ -209,13 +216,14 @@ export class OracleResolveDriver{
         if(did.length <= 0 || queryDirectory.length <= 0){
             throw new Error("Invalid Params passed to Resolve method");
         }
+        const ledger = agentContext.dependencyManager.resolve(OracleLedgerService);
         const resolutionResultJson = await this.didResolve(did, queryDirectory).then();
         const resolutionResult = JsonTransformer.fromJSON(resolutionResultJson, ResolutionResult);
         //console.log("Resolved res result: " + resolutionResult);//for debugging; this returns -1 in tests; this is because i am passing the test config file, so the axios call will keep failing
         try{
             const metadataStr = JSON.stringify(resolutionResult.metaData1);
             //console.log("Resolved metadata json: " + metadataStr);//for debugging; this returns undefined
-            const resultMetadata = this.didResolveMetaData(metadataStr);//throws error here
+            const resultMetadata = this.didResolveMetaData(metadataStr,ledger, did);//throws error here
             //console.log("Verified Metadata: " + resultMetadata);
         }catch(err){
             throw new Error("Unable to verify did resolution in Resolve method");
