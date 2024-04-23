@@ -12,7 +12,7 @@ import { DidDocMetadata } from './DidDocMetadata';
  * @author Michael Kaufman
  * @summary Implements a DID Resolver Driver using previously implemented functions in 
  * Oracle codebase, as well as using functions from Open-Wallet Credo's typescript DID libraries
- * Date Last Modified: Apr 17, 2024
+ * Date Last Modified: Apr 22, 2024
  */
 export class OracleResolveDriver{
     
@@ -211,12 +211,12 @@ export class OracleResolveDriver{
         }
         const resolutionResultJson = await this.didResolve(did, queryDirectory).then();
         const resolutionResult = JsonTransformer.fromJSON(resolutionResultJson, ResolutionResult);
-        console.log("Resolved res result: " + resolutionResult);//for debugging; this returns -1 in tests; this is because i am passing the test config file, so the axios call will keep failing
+        //console.log("Resolved res result: " + resolutionResult);//for debugging; this returns -1 in tests; this is because i am passing the test config file, so the axios call will keep failing
         try{
             const metadataStr = JSON.stringify(resolutionResult.metaData1);
-            console.log("Resolved metadata json: " + metadataStr);//for debugging; this returns undefined
+            //console.log("Resolved metadata json: " + metadataStr);//for debugging; this returns undefined
             const resultMetadata = this.didResolveMetaData(metadataStr);//throws error here
-            console.log("Verified Metadata: " + resultMetadata);
+            //console.log("Verified Metadata: " + resultMetadata);
         }catch(err){
             throw new Error("Unable to verify did resolution in Resolve method");
         }

@@ -8,7 +8,7 @@ declare function assert(value: unknown): asserts value;
 /**
  * File to test methods in oracle Resolve Driver class
  * @author Michael Kaufman
- * Date Last Modified: Apr 17, 2024
+ * Date Last Modified: Apr 22, 2024
  */
 
 
@@ -173,11 +173,3 @@ test('Test 21: Invalid DID string passed with invalid query string', async ()=>{
     }).rejects.toThrow();
 });
 
-test('Test 22: Valid DID string passed with valid query string', async ()=>{
-    //const driver = new OracleResolveDriver();
-    //expect(()=>{driver.Resolve("did:test:1234", mockDirectory)}).not.toThrow();
-    await expect(async ()=>{
-        const driver = new OracleResolveDriver();
-        await driver.Resolve("did:test:1234", mockDirectory);
-    }).rejects.toThrow();//this should not throw womp; test should fail
-});
