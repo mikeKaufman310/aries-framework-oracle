@@ -3,14 +3,16 @@ import * as fs from 'fs';
 import axios from 'axios';
 import { JsonTransformer } from '@credo-ts/core';
 import { Metadata } from '@credo-ts/core/build/storage/Metadata';
-import {  DidDocumentMetadata } from "./DidDocumentMetadata";
+import { ResolutionResult } from './ResolutionResult';
+import type { DIDDocumentMetadata, DIDResolutionMetadata, DIDResolutionOptions, ParsedDID } from 'did-resolver';
+import { DidDocMetadata } from './DidDocMetadata';
 
 /**
  * Class to implemented a DID Resolver Driver to be a part of DIF Universal Resolver 
  * @author Michael Kaufman
  * @summary Implements a DID Resolver Driver using previously implemented functions in 
  * Oracle codebase, as well as using functions from Open-Wallet Credo's typescript DID libraries
- * Date Last Modified: Apr 14, 2024
+ * Date Last Modified: Apr 22, 2024
  */
 export class OracleResolveDriver{
     
@@ -137,15 +139,15 @@ export class OracleResolveDriver{
      * @param diddoc DIDDoc metadata to be resolved and have verified metadata after resolution
      * @returns Promise of DIDDoc metadata (string) after manipulated metadata for verification or error type
      */
-    public didResolveMetaData(diddocMetadata: string): Promise<any>{
+    public didResolveMetaData(diddocMetadata: string): string{
         if(diddocMetadata.length <= 0){
             throw new Error("Invalid params passed to didResolveMetaData method");
         }
         try{
-            const diddocMetadataObject = JsonTransformer.fromJSON(JSON.parse(diddocMetadata),DidDocumentMetadata);
+            const diddocMetadataObject = JsonTransformer.fromJSON(JSON.parse(diddocMetadata), DidDocMetadata);
             //hit rest api endpoint to verify resolution of metadata elements
             //NB: this will be implemented in a later issue
-            return Promise.resolve(JSON.stringify(diddocMetadataObject));
+            return JSON.stringify(diddocMetadataObject);
         }catch(err){
             throw new Error("Unable to parse DIDDoc into JSON in didResolveMetaData method");
         }
@@ -190,6 +192,55 @@ export class OracleResolveDriver{
         }
         didDoc.context = Array.isArray(didDoc.context) ? didDoc.context : [didDoc.context];
         return true;
+    }
+
+    /**
+     * Acts as main resolver method that calls all helper methods in flow
+     * @param did string
+     * @param queryDirectory directory for querying ledger credentials
+     * @returns promise of resolved did document after processes
+     */
+    async Resolve(did: string, queryDirectory: string): Promise<ResolutionResult>{
+        //check params
+        //call didResolve method
+        //call didResolveMetaData method
+        //call didContextPush method
+        //return didDoc after all method calls
+        if(did.length <= 0 || queryDirectory.length <= 0){
+            throw new Error("Invalid Params passed to Resolve method");
+        }
+        const resolutionResultJson = await this.didResolve(did, queryDirectory).then();
+        const resolutionResult = JsonTransformer.fromJSON(resolutionResultJson, ResolutionResult);
+        //console.log("Resolved res result: " + resolutionResult);//for debugging; this returns -1 in tests; this is because i am passing the test config file, so the axios call will keep failing
+        try{
+            const metadataStr = JSON.stringify(resolutionResult.metaData1);
+            //console.log("Resolved metadata json: " + metadataStr);//for debugging; this returns undefined
+            const resultMetadata = this.didResolveMetaData(metadataStr);//throws error here
+            //console.log("Verified Metadata: " + resultMetadata);
+        }catch(err){
+            throw new Error("Unable to verify did resolution in Resolve method");
+        }
+        let keyOption = 0;
+        try{
+            if(typeof resolutionResult.didDoc.verificationMethod !== "undefined"){
+                if(resolutionResult.didDoc.verificationMethod[0].type == "Ed25519VerificationKey2020" ){
+                    keyOption = 1;
+                }else if(resolutionResult.didDoc.verificationMethod[0].type == "Ed25519VerificationKey2018"){
+                    keyOption = 2;
+                }else if(queryDirectory != "TEST"){
+                    keyOption = 3;
+                }else{
+                    keyOption = 4;
+                }
+            }
+        }catch(err){
+            throw new Error("Verification method of resolution result is undefined in Resolve method");
+        }
+        const contextPushSuccess = this.didContextPush(resolutionResult.didDoc, keyOption);
+        if(!contextPushSuccess){
+            throw new Error("Resolution result not W3C compliant; error in Resolve method");
+        }
+        return resolutionResult;
     }
 }
 

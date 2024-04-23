@@ -8,7 +8,7 @@ declare function assert(value: unknown): asserts value;
 /**
  * File to test methods in oracle Resolve Driver class
  * @author Michael Kaufman
- * Date Last Modified: Apr 14, 2024
+ * Date Last Modified: Apr 22, 2024
  */
 
 
@@ -140,9 +140,8 @@ test('Test 17: Valid (Test) Option with Valid Diddoc passed, boolean returned', 
     const driver = new OracleResolveDriver();
     const result = driver.didContextPush(validDidDocumentInstance, 2);
     expect(()=>{driver.didContextPush(validDidDocumentInstance, 2)}).not.toThrow();
-    expect(result == true);
+    expect(result).toBe(true);
 });
-
 
 test('Test 18: Valid (Test) Option with Invalid Diddoc passed, boolean returned', ()=>{
     const driver = new OracleResolveDriver();
@@ -151,3 +150,26 @@ test('Test 18: Valid (Test) Option with Invalid Diddoc passed, boolean returned'
     //console.log(result);
     expect(result).toBe(false);
 });
+
+//Resolve function
+test('Test 19: Valid DID string passed with invalid query string', async () => {
+    await expect(async ()=>{
+        const driver = new OracleResolveDriver();
+        await driver.Resolve("did:test:1234", "");
+    }).rejects.toThrow();
+});
+
+test('Test 20: Invalid DID string passed with valid query string', async ()=>{
+    await expect(async ()=>{
+        const driver = new OracleResolveDriver();
+        await driver.Resolve("", mockDirectory);
+    }).rejects.toThrow();
+});
+
+test('Test 21: Invalid DID string passed with invalid query string', async ()=>{
+    await expect(async ()=>{
+        const driver = new OracleResolveDriver();
+        await driver.Resolve("", "");
+    }).rejects.toThrow();
+});
+
