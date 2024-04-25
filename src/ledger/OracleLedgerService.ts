@@ -154,22 +154,11 @@ export class OracleLedgerService {
   }
 
   public async getPeerList(channel: string){
-    const data = JSON.stringify({
-      chaincode: this.networkConfig.chaincode,
-      args: ["GetPeerList", channel],
-      sync: true,
-    });
-    let config = {
-      url: `${this.networkConfig.network}/api/v2/channels/${this.networkConfig.channel}/transactions`,
-      method: "post",
-      headers: {
-        Authorization: `Basic ${this.networkConfig.encodedCredential}`,
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
     try {
-      let res = await axios(config);
+      let res = await axios.get(`${this.networkConfig.network}/api/v2/nodes/peers`,{
+        chaincode: this.networkConfig.chaincode,
+        channelName: this.networkConfig.channel
+      });
       return res.data.result.payload;
     } catch (err) {
       console.log(err);
