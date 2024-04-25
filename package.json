@@ -9,7 +9,7 @@
   "scripts": {
     "start": "yarn run build && node ./build/index.js",
     "build": "yarn run clean && yarn run compile",
-    "clean": "rm -rf ./build && rm -rf ./demoBuild",
+    "clean": "rm -rf ./build && rm -rf ./demoBuild && make",
     "compile": "tsc -p tsconfig.build.json",
     "prepublishOnly": "yarn run build",
     "test": "yarn clean && npx jest",
