@@ -9,10 +9,12 @@
   "scripts": {
     "start": "yarn run build && node ./build/index.js",
     "build": "yarn run clean && yarn run compile",
-    "clean": "rm -rf ./build",
+    "clean": "rm -rf ./build && rm -rf ./demoBuild",
     "compile": "tsc -p tsconfig.build.json",
     "prepublishOnly": "yarn run build",
-    "test": "yarn clean && npx jest"
+    "test": "yarn clean && npx jest",
+    "demo": "yarn clean && yarn runDemo",
+    "runDemo": "tsc -p tsconfig.demo.json && http-server"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -32,16 +34,21 @@
     "@aries-framework/core": "^0.4.2",
     "@credo-ts/core": "^0.5.1",
     "@testdeck/mocha": "^0.3.3",
+    "@types/express": "^4.17.21",
     "axios": "^1.6.0",
     "chai": "^5.1.0",
+    "class-validator": "^0.14.1",
+    "express": "^4.19.2",
     "mocha": "^10.4.0",
     "nyc": "^15.1.0",
+    "path": "^0.12.7",
     "ts-mockito": "^2.6.1",
     "ts-node": "^10.9.2",
     "tsyringe": "^4.8.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
+    "@types/validator": "^13.11.9",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.2"
   }

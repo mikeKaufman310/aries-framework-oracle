@@ -7,7 +7,7 @@ import type {
   DidCreateResult,
   DidDeactivateResult,
   DidUpdateResult,
-} from "@aries-framework/core";
+} from "@credo-ts/core";
 
 import {
   DidDocument,
@@ -22,7 +22,7 @@ import {
   getKeyFromVerificationMethod,
   JsonTransformer,
   VerificationMethod,
-} from "@aries-framework/core";
+} from "@credo-ts/core";
 
 import { OracleLedgerService } from "../ledger";
 

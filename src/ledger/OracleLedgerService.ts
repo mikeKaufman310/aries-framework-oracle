@@ -1,8 +1,7 @@
 import {
-  AriesFrameworkError,
   DidDocument,
   injectable,
-} from "@aries-framework/core";
+} from "@credo-ts/core";
 import { OracleModuleConfig } from "../OracleModuleConfig";
 
 const axios = require("axios");

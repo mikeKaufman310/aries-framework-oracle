@@ -1,5 +1,4 @@
-import type { ParsedDid } from "@aries-framework/core";
-import { utils } from "@aries-framework/core";
+import type { ParsedDid } from "@credo-ts/core";
 import { isBase58 } from "class-validator";
 
 const ID_CHAR = "[a-zA-Z]";

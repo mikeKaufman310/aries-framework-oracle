@@ -2,9 +2,9 @@ import type {
   AgentContext,
   DependencyManager,
   Module,
-} from "@aries-framework/core";
+} from "@credo-ts/core";
 
-import { AgentConfig, Buffer } from "@aries-framework/core";
+import { AgentConfig, Buffer } from "@credo-ts/core";
 
 import { OracleModuleConfig , OracleModuleConfigOptions } from "./OracleModuleConfig"; // Import OracleModuleConfig
 import { OracleLedgerService } from "./ledger"; // Import OracleLedgerService
