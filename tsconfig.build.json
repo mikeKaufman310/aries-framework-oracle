@@ -7,7 +7,7 @@
     "sourceMap": true,
     "strict": true,
     "noEmitOnError": true,
-    "lib": [],
+    "lib": ["DOM"],
     "types": [],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -15,6 +15,6 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "demo.ts"],
   "exclude": ["node_modules", "build", "**/*.test.ts", "**/__tests__/*.ts", "**/__mocks__/*.ts", "**/build/**"]
 }

@@ -9,3 +9,10 @@ destroy:
 	rm *.js.map
 	rm demo.js
 	rm *.d.ts
+	rm index.js
+
+demo:
+	tsc src/ledger/OracleLedgerService.ts
+	tsc src/dids/OracleResolveDriver.ts
+	tsc demo.ts
+	http-server

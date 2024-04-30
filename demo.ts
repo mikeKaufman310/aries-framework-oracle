@@ -1,14 +1,31 @@
 
-import { AgentContext } from '@credo-ts/core';
-import {OracleResolveDriver} from './src/dids/OracleResolveDriver';
-async function res(){
-    const driver = new OracleResolveDriver();
-    const inBox = document.getElementById('didInput');
-    if(typeof inBox !== null && typeof inBox?.outerHTML !== "undefined"){
-        const res = await driver.didResolve(inBox?.outerHTML,process.cwd()+"/src/transcripts/ledgerConfig.txt").then(response =>{
-            document.write(response);
+
+import * as ejs from 'ejs';
+import * as http from 'http';
+import * as fs from 'fs';
+import * as path from 'path';
+
+
+
+const server = http.createServer((req, res)=> {
+    if(req.url === '/index.js'){
+        const sPath = path.join(__dirname, 'index.js');
+        fs.readFile(sPath,(err, data)=>{
+            res.writeHead(200, { 'Content-Type': 'application/javascript' });
+            res.end(data);
         });
-        //document.write(res);//commented out for testing purposes
-        //document.write("works");//did:orcl:wnVwpENoPYSytIVmOVbARXXxniYySLRstdzRXVtkJAvbQgXVBY
+    }else{
+        fs.readFile(path.join(__dirname, 'views', 'demo.ejs'), 'utf-8', (err, data)=>{
+            if(err){
+                console.log("error in readfile");
+            }
+            const html = ejs.render(data);
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end(html);
+        });
     }
-}
+});
+
+console.log("running on local 3000 port");
+server.listen(3000);
+
