@@ -1,3 +1,4 @@
+//exports = {};
 import { AgentContext } from '@credo-ts/core';
 import {OracleResolveDriver} from './src/dids/OracleResolveDriver';
 async function res(){

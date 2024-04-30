@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DID Resolver Driver Demo</title>
-    <script src="../index.js" defer> </script>
+    
+    <script type="text/javascript" src="../index.js" defer></script>
 </head>
 <body>
     <form>
         <label for="didInput">DID:</label>
         <input type="text" id="didInput"  name="didInput">
         <br><br>
+        <script> var exports = {}</script>
         <input type="submit" id="submit" onclick="res()" value="Resolve">
         <button onclick="htmlTest()">Test</button>
     </form>
