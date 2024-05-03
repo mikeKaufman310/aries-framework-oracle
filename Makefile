@@ -9,7 +9,7 @@ destroy:
 	rm *.js.map
 	rm demo.js
 	rm *.d.ts
-	rm index.js
+	rm index.mjs
 
 demo:
 	tsc src/ledger/OracleLedgerService.ts

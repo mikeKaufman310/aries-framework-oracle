@@ -13,9 +13,9 @@
     "compile": "tsc -p tsconfig.build.json",
     "prepublishOnly": "yarn run build",
     "test": "yarn clean && npx jest",
-    "demo": "yarn clean && yarn runDemo1 && yarn runDemo2",
-    "runDemo1": "tsc -p tsconfig.demo.json && tsc demo.ts",
-    "runDemo2": "node demo.js"
+    "demo": "yarn clean && yarn runDemo1",
+    "runDemo1": "tsc index.ts && http-server -o demo.html",
+    "runDemo": "node demo.js"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -44,6 +44,7 @@
     "commonjs": "^0.0.1",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "http": "^0.0.1-security",
     "jquery": "^3.7.1",
     "mocha": "^10.4.0",
     "nyc": "^15.1.0",

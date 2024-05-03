@@ -1,19 +1,27 @@
-//exports = {};
-import { AgentContext } from '@credo-ts/core';
-import {OracleResolveDriver} from './src/dids/OracleResolveDriver';
+import axios from 'axios';
 async function res(){
-    const driver = new OracleResolveDriver();
-    const inBox = document.getElementById('didInput');
+    const inBox: HTMLInputElement | null = document.getElementById('didInput') as HTMLInputElement;
     if(typeof inBox !== null && typeof inBox?.outerHTML !== "undefined"){
-        document.write("sending query")
-        //const res = await driver.didResolve(inBox?.outerHTML,process.cwd()+"/src/transcripts/ledgerConfig.txt").then(response =>{
-        //    document.write(response);
-        //});
-        //document.write(res);//commented out for testing purposes
-        //document.write("works");//did:orcl:wnVwpENoPYSytIVmOVbARXXxniYySLRstdzRXVtkJAvbQgXVBY
+        //document.write(inBox.value);//did:orcl:wnVwpENoPYSytIVmOVbARXXxniYySLRstdzRXVtkJAvbQgXVBY
+        try{
+            const data = JSON.stringify({
+                chaincode: 'didtest',
+                args: ["GetDidDocumentById", inBox.value],
+                sync: true,
+            });
+            let config = {
+                url: 'didtest/api/v2/channels/elizabeth',
+                method: "post",
+                header:{
+                    Authorization: 'Basic ed25519-2018',
+                    "Content-Type": "application/json",
+                },
+                data: data,
+            };
+            const res = await axios(config);
+            document.write(JSON.stringify(res.data.result.payload));//temporary
+        }catch(err){
+            console.log("demo did not work");
+        }
     }
-}
-
-function htmlTest(){
-    document.write("test");
 }
