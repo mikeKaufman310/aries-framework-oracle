@@ -4,7 +4,7 @@
 import * as http from 'http';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as ejs from 'ejs'
+import * as ejs from 'ejs';
 
 
 

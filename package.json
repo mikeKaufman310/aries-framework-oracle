@@ -37,7 +37,7 @@
     "@credo-ts/core": "^0.5.1",
     "@testdeck/mocha": "^0.3.3",
     "@types/express": "^4.17.21",
-    "axios": "^1.6.0",
+    "axios": "^1.6.8",
     "browserify": "^17.0.0",
     "chai": "^5.1.0",
     "class-validator": "^0.14.1",
