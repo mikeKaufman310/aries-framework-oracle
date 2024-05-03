@@ -15,7 +15,7 @@ const server = http.createServer((req, res)=> {
             res.end(data);
         });
     }else {
-        fs.readFile(path.join(__dirname, 'views', 'demo.ejs'), 'utf-8', (err, data)=>{
+        fs.readFile(path.join(__dirname, 'demo.html'), 'utf-8', (err, data)=>{
             if(err){
                 console.log("error in readfile");
             }

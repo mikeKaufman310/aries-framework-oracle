@@ -13,9 +13,9 @@
     "compile": "tsc -p tsconfig.build.json",
     "prepublishOnly": "yarn run build",
     "test": "yarn clean && npx jest",
-    "demo": "yarn clean && yarn runDemo1",
+    "demo": "yarn clean && yarn runDemo",
     "runDemo1": "tsc index.ts && http-server -o demo.html",
-    "runDemo": "node demo.js"
+    "runDemo": "tsc -p tsconfig.demo.json && tsc demo.ts && node demo.js"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
