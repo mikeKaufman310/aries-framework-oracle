@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from'axios';
 async function res(){
     const inBox: HTMLInputElement | null = document.getElementById('didInput') as HTMLInputElement;
     if(typeof inBox !== null && typeof inBox?.outerHTML !== "undefined"){

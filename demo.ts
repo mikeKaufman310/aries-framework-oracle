@@ -1,4 +1,5 @@
 
+
 import * as ejs from 'ejs';
 import * as http from 'http';
 import * as fs from 'fs';
@@ -13,8 +14,8 @@ const server = http.createServer((req, res)=> {
             res.writeHead(200, { 'Content-Type': 'application/javascript' });
             res.end(data);
         });
-    }else {
-        fs.readFile(path.join(__dirname, 'views',  'demo.ejs'), 'utf-8', (err, data)=>{
+    }else{
+        fs.readFile(path.join(__dirname, 'views', 'demo.html'), 'utf-8', (err, data)=>{
             if(err){
                 console.log("error in readfile");
             }
