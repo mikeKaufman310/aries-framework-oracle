@@ -2,20 +2,22 @@
     "compilerOptions": {
       "outDir": "./",
       "module": "CommonJS",
-      "target": "ES6",
+      "target": "es6",
       "declaration": true,
       "sourceMap": true,
       "strict": true,
       "noEmitOnError": true,
-      "lib": ["DOM"],
-      "types": [],
+      "lib": ["ES2015","DOM"],
+      "types": ["node"],
+      "typeRoots": ["node_modules/@types"],
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true,
       "resolveJsonModule": true,
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
-      "moduleResolution": "Node",
-      "skipLibCheck": false
+      //"moduleResolution": "Node",
+      "skipDefaultLibCheck": false, 
+      "skipLibCheck": true
     },
     "include": ["/**/*"],
     "exclude": ["node_modules", "src/dids/OracleDidRegistrar.ts","src", "build","test", "**/*.test.ts", "**/__tests__/*.ts", "**/__mocks__/*.ts", "**/build/**"]

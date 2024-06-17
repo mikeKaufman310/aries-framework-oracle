@@ -8,6 +8,7 @@ import type { DIDDocumentMetadata, DIDResolutionMetadata, DIDResolutionOptions, 
 import { DidDocMetadata } from './DidDocMetadata';
 import { OracleLedgerService } from '../ledger';
 
+
 /**
  * Class to implemented a DID Resolver Driver to be a part of DIF Universal Resolver 
  * @author Michael Kaufman

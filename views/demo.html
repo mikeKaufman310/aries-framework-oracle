@@ -8,12 +8,185 @@
     <script type="text/javascript" src="../index.js" defer></script>
 </head>
 <body>
+    <div id="app">
+        <div class = "app">
+            <div class="heading">
+                <header class="top-box">
+                    <h1>Oracle Universal Resolver</h1>
+                    <style>
+                        h1{
+                            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                            font-size: xx-large;
+                        }
+                        .heading {
+                            width: 500px; /* Width of the box */
+                            height: 75px; /* Height of the box */
+                            background-color: #ffffff; /* Background color of the box */
+                            padding: 10px; /* Padding inside the box */
+                            border: 1px solid #0a0606; /* Border around the box */
+                            border-radius: 10px;
+                            text-align: center;
+                            align-items: center;
+                            justify-content: center;
+                            display: flex;
+                        }
+                    </style>
+                </header>
+            </div>
+            <div class="accepteddids">
+                <div id="s">Supported Methods:</div>
+                <div id="m">did:orcl</div>
+                <style>
+                    .accepteddids {
+                        display: flex;
+                    }
+                    #m {
+                        width: 50px; /* Width of the box */
+                        height: 30px; /* Height of the box */
+                        background-color: #f0f0f0; /* Background color of the box */
+                        padding: 10px; /* Padding inside the box */
+                        border: 1px solid #0a0606; /* Border around the box */
+                        border-radius: 10px;
+                        text-align: center;
+                        align-items: center;
+                        justify-content: center;
+                        display: flex;
+                        margin-top: 10px;
+                        margin-bottom: 10px;
+                    }
+                    #s {
+                        width: 50px; /* Width of the box */
+                        height: 30px; /* Height of the box */
+                        background-color: #ffffff; /* Background color of the box */
+                        padding: 10px; /* Padding inside the box */
+                        border: 1px solid #0a0606; /* Border around the box */
+                        border-radius: 10px;
+                        text-align: center;
+                        align-items: center;
+                        justify-content: center;
+                        display: flex;
+                        margin-right: 10px;
+                        margin-top: 10px;
+                        margin-bottom: 10px;
+                    }
+                    div {
+                        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                        font-size: medium;
+                        font-weight: bold;
+                    }
+                </style>
+            </div>
+            <div class="inputAndResultBox">
+                <div class="inputBox">
+                    <div class="inputBoxText">did-url</div>
+                    <div class="box">
+                        <input type="text" id="didInput" name="didInput">
+                    </div>
+                    <button class="submitDidButton" onclick="resolve()">Resolve</button>
+                    <form>
+                    </form>
+                    <style>
+                        .inputBox {
+                            display: flex;
+                        }
+                        .inputBoxText {
+                            width: 50px; /* Width of the box */
+                            height: 30px; /* Height of the box */
+                            background-color: #f0f0f0; /* Background color of the box */
+                            padding: 10px; /* Padding inside the box */
+                            border: 1px solid #0a0606; /* Border around the box */
+                            border-radius: 10px;
+                            text-align: center;
+                            align-items: center;
+                            justify-content: center;
+                            display: flex;
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+                            display: flex;
+                        }
+                        .box {
+                            width: 200px; /* Set width of the input */
+                            height: 30px;
+                            margin-top: 10px;
+                            padding: 10px; /* Add padding inside the input */
+                            border: 1px solid #ccc; /* Add border */
+                            border-radius: 5px; /* Round the corners */
+                            font-size: 16px; /* Set font size */
+                            display: flex;
+                        }
+                        .submitDidButton {
+                            width: 50px; /* Width of the box */
+                            height: 55px; /* Height of the box */
+                            background-color: #0c47ea; /* Background color of the box */
+                            padding: 20px 30px; /* Padding inside the box */
+                            border: 1px solid #0a0606; /* Border around the box */
+                            border-radius: 10px;
+                            text-align: center;
+                            align-items: center;
+                            justify-content: center;
+                            display: flex;
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+                            margin-left: 20px;
+                            display: flex;
+                            cursor: pointer;
+                            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                            font-size: medium;
+                            font-weight:800;
+                        }
+                        .submitDidButton:hover {
+                            background-color: #1d5086; /* Darker background color on hover */
+                        }
+                    </style>
+                </div>
+                <br>
+                <div class="resultDisplay">
+                    <div class="resultDisplayBox" id="displayOut"></div>
+                    <style>
+                        .resultDisplayBox {
+                            width: 400px; /* Width of the box */
+                            height: 375px; /* Height of the box */
+                            background-color: #ffffff; /* Background color of the box */
+                            padding: 10px; /* Padding inside the box */
+                            border: 1px solid #0a0606; /* Border around the box */
+                            border-radius: 10px;
+                            display: flex;
+                            margin-right: 10px;
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+                            flex-wrap: wrap;
+                            overflow:scroll;
+                        }
+                    </style>
+                </div>
+            </div>
+             <style>
+                .inputAndResultBox {
+                    width: 500px; /* Width of the box */
+                    height: 500px; /* Height of the box */
+                    background-color: #ffffff; /* Background color of the box */
+                    padding: 10px; /* Padding inside the box */
+                    border: 1px solid #0a0606; /* Border around the box */
+                    border-radius: 10px;
+                    display: flex;
+                    margin-right: 10px;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                    flex-wrap: wrap;
+                }
+            </style>
+        </div>
+        <style>
+            .app {
+                align-items: center;
+                justify-content: center;
+                margin-left: 450px;
+                margin-top: 50px;
+            }
+        </style>
+    </div>
     <form>
-        <label for="didInput">DID:</label>
-        <input type="text" id="didInput"  name="didInput">
         <br><br>
-        <script> var exports = {}</script>
-        <input type="submit" id="submit" onclick="res()" value="Resolve">
     </form>
 </body>
 </html>
